@@ -11,7 +11,7 @@
   to = "/index.html"
   status = 200
 
-# Security & Performance Headers for all pages
+# Security & Freshness Headers
 [[headers]]
   for = "/*"
   [headers.values]
@@ -21,15 +21,27 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Content-Security-Policy = "default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com https://accounts.google.com https://images.unsplash.com https://i.ytimg.com https://*.cdninstagram.com data: blob:; img-src 'self' https: data: blob:; media-src 'self' blob:; connect-src 'self' https://accounts.google.com;"
-    Cache-Control = "public, max-age=3600"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
 
-# Cache static assets aggressively
 [[headers]]
-  for = "/*.css"
+  for = "/*.html"
   [headers.values]
-    Cache-Control = "public, max-age=86400"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
 
 [[headers]]
   for = "/*.js"
   [headers.values]
-    Cache-Control = "public, max-age=86400"
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Pragma = "no-cache"
+    Expires = "0"
