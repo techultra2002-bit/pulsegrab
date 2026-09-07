@@ -23,3 +23,6 @@ desktop.ini
 # IDE configs (optional — keep if you want)
 .vscode/
 .idea/
+
+# Local Netlify folder
+.netlify
