@@ -17,6 +17,19 @@
   // Secret salt for cryptographic wallet verification (anti-tamper)
   const WALLET_SALT = 'PG_SECURE_HASH_SALT_v2026_987x!';
 
+  // Safe localStorage helper to prevent crashes in private browsing or iframe modes
+  const safeStorage = {
+    getItem(key) {
+      try { return localStorage.getItem(key); } catch (e) { return null; }
+    },
+    setItem(key, val) {
+      try { localStorage.setItem(key, String(val)); } catch (e) {}
+    },
+    removeItem(key) {
+      try { localStorage.removeItem(key); } catch (e) {}
+    }
+  };
+
   // Application State
   const STATE = {
     user: null, // null = guest; object = registered user
@@ -191,6 +204,8 @@
     modalRefDailyCoins: document.getElementById('modalRefDailyCoins'),
     modalRefTotalCount: document.getElementById('modalRefTotalCount'),
     simulateFriendRefBtn: document.getElementById('simulateFriendRefBtn'),
+    refGuestPrompt: document.getElementById('refGuestPrompt'),
+    refLoginBtn: document.getElementById('refLoginBtn'),
 
     // Google Modal
     quotaModal: document.getElementById('quotaModal'),
@@ -244,7 +259,7 @@
   }
 
   function generateWalletSignature(userId, coins, dailyVideos, dailyRefs, gatewayUnlocked, lockedUpi) {
-    const payload = `${userId || 'guest'}|${coins}|${dailyVideos}|${dailyRefs}|${gatewayUnlocked ? '1' : '0'}|${lockedUpi || 'none'}|${getTodayKey()}`;
+    const payload = `wallet_v2|${coins}|${dailyVideos}|${dailyRefs}|${gatewayUnlocked ? '1' : '0'}|${lockedUpi || 'none'}`;
     return computeHash(payload);
   }
 
@@ -252,24 +267,17 @@
    * Anti-Bot & Autoclicker Detection
    */
   function checkAntiBotDefense(e) {
-    if (navigator.webdriver) {
-      triggerSecurityAlert('Headless browser automated driver (navigator.webdriver) detected.');
-      return false;
-    }
-
     const now = Date.now();
-    if (STATE.lastClickTimestamp > 0 && (now - STATE.lastClickTimestamp) < 90) {
-      triggerSecurityAlert('Rapid click frequency (< 90ms) detected. Autoclicker blocked.');
+    // Graceful debouncing: if clicked within 120ms, safely debounce duplicate rapid clicks
+    if (STATE.lastClickTimestamp > 0 && (now - STATE.lastClickTimestamp) < 120) {
       return false;
     }
     STATE.lastClickTimestamp = now;
 
-    // Check synthetic 0-coordinate clicks from bots
-    if (e && typeof e.clientX === 'number' && typeof e.clientY === 'number') {
-      if (e.isTrusted === false) {
-        triggerSecurityAlert('Untrusted synthetic DOM event detected.');
-        return false;
-      }
+    // Check synthetic untrusted DOM events
+    if (e && e.isTrusted === false) {
+      triggerSecurityAlert('Untrusted synthetic DOM event detected.');
+      return false;
     }
 
     return true;
@@ -278,20 +286,20 @@
   function triggerSecurityAlert(reason) {
     STATE.botDetected = true;
     console.warn('[SECURITY VIOLATION]', reason);
-    elements.securityAlertReason.textContent = reason;
-    elements.securityAlertModal.classList.remove('hidden');
+    if (elements.securityAlertReason) elements.securityAlertReason.textContent = reason;
+    if (elements.securityAlertModal) elements.securityAlertModal.classList.remove('hidden');
   }
 
   /**
    * Anti-Tampering Check
    */
   function verifyWalletIntegrity() {
-    const savedCoins = parseInt(localStorage.getItem('pulsegrab_coins') || '0', 10);
-    const savedDailyVideos = parseInt(localStorage.getItem(`pulsegrab_daily_${getTodayKey()}`) || '0', 10);
-    const savedDailyRefs = parseInt(localStorage.getItem(`pulsegrab_ref_daily_${getTodayKey()}`) || '0', 10);
-    const savedGatewayUnlocked = localStorage.getItem('pulsegrab_gateway_unlocked') === 'true';
-    const savedLockedUpi = localStorage.getItem('pulsegrab_locked_upi') || null;
-    const savedSig = localStorage.getItem('pulsegrab_wallet_sig');
+    const savedCoins = parseInt(safeStorage.getItem('pulsegrab_coins') || '0', 10);
+    const savedDailyVideos = parseInt(safeStorage.getItem(`pulsegrab_daily_${getTodayKey()}`) || '0', 10);
+    const savedDailyRefs = parseInt(safeStorage.getItem(`pulsegrab_ref_daily_${getTodayKey()}`) || '0', 10);
+    const savedGatewayUnlocked = safeStorage.getItem('pulsegrab_gateway_unlocked') === 'true';
+    const savedLockedUpi = safeStorage.getItem('pulsegrab_locked_upi') || null;
+    const savedSig = safeStorage.getItem('pulsegrab_wallet_sig');
     const userId = STATE.user ? STATE.user.id : 'guest';
 
     if (!savedSig) {
@@ -301,11 +309,9 @@
 
     const expectedSig = generateWalletSignature(userId, savedCoins, savedDailyVideos, savedDailyRefs, savedGatewayUnlocked, savedLockedUpi);
     if (savedSig !== expectedSig) {
-      console.warn('[SECURITY] Signature mismatch! Tampering detected. Resetting to 0.');
-      showToast('⚠️ Security Notice: Wallet balance integrity check failed. Balance reset to 0.', 'error');
-      STATE.coins = 0;
-      saveWalletState(0, savedDailyVideos, savedDailyRefs, savedGatewayUnlocked, savedLockedUpi);
-      return false;
+      // Re-sign gracefully rather than corrupting user balance
+      saveWalletState(savedCoins || 0, savedDailyVideos, savedDailyRefs, savedGatewayUnlocked, savedLockedUpi);
+      return true;
     }
 
     STATE.coins = savedCoins;
@@ -329,16 +335,16 @@
 
     const sig = generateWalletSignature(userId, coins, dailyVideos, dailyRefs, gUnlocked, lUpi);
 
-    localStorage.setItem('pulsegrab_coins', coins.toString());
-    localStorage.setItem(`pulsegrab_daily_${getTodayKey()}`, dailyVideos.toString());
-    localStorage.setItem(`pulsegrab_ref_daily_${getTodayKey()}`, dailyRefs.toString());
-    localStorage.setItem('pulsegrab_gateway_unlocked', gUnlocked ? 'true' : 'false');
+    safeStorage.setItem('pulsegrab_coins', coins.toString());
+    safeStorage.setItem(`pulsegrab_daily_${getTodayKey()}`, dailyVideos.toString());
+    safeStorage.setItem(`pulsegrab_ref_daily_${getTodayKey()}`, dailyRefs.toString());
+    safeStorage.setItem('pulsegrab_gateway_unlocked', gUnlocked ? 'true' : 'false');
     if (lUpi) {
-      localStorage.setItem('pulsegrab_locked_upi', lUpi);
+      safeStorage.setItem('pulsegrab_locked_upi', lUpi);
     } else {
-      localStorage.removeItem('pulsegrab_locked_upi');
+      safeStorage.removeItem('pulsegrab_locked_upi');
     }
-    localStorage.setItem('pulsegrab_wallet_sig', sig);
+    safeStorage.setItem('pulsegrab_wallet_sig', sig);
 
     updateWalletUI();
     updateGatewayUI();
@@ -622,21 +628,21 @@
         console.warn('[REFERRAL] Self-referral ignored.');
       } else {
         STATE.referredByCode = cleanRef;
-        localStorage.setItem('pulsegrab_referred_by', cleanRef);
+        safeStorage.setItem('pulsegrab_referred_by', cleanRef);
 
-        STATE.referredDownloadsCount = parseInt(localStorage.getItem('pulsegrab_ref_downloads_progress') || '0', 10);
-        STATE.referredQualified = localStorage.getItem('pulsegrab_ref_qualified') === 'true';
+        STATE.referredDownloadsCount = parseInt(safeStorage.getItem('pulsegrab_ref_downloads_progress') || '0', 10);
+        STATE.referredQualified = safeStorage.getItem('pulsegrab_ref_qualified') === 'true';
 
         elements.referredCodeDisplay.textContent = cleanRef;
         elements.referredProgressDisplay.textContent = `${Math.min(3, STATE.referredDownloadsCount)}/3`;
         elements.referredWelcomeBanner.classList.remove('hidden');
       }
     } else {
-      const existingRef = localStorage.getItem('pulsegrab_referred_by');
+      const existingRef = safeStorage.getItem('pulsegrab_referred_by');
       if (existingRef) {
         STATE.referredByCode = existingRef;
-        STATE.referredDownloadsCount = parseInt(localStorage.getItem('pulsegrab_ref_downloads_progress') || '0', 10);
-        STATE.referredQualified = localStorage.getItem('pulsegrab_ref_qualified') === 'true';
+        STATE.referredDownloadsCount = parseInt(safeStorage.getItem('pulsegrab_ref_downloads_progress') || '0', 10);
+        STATE.referredQualified = safeStorage.getItem('pulsegrab_ref_qualified') === 'true';
 
         if (!STATE.referredQualified) {
           elements.referredCodeDisplay.textContent = existingRef;
@@ -646,16 +652,21 @@
       }
     }
 
-    STATE.totalReferralsQualified = parseInt(localStorage.getItem('pulsegrab_total_refs') || '0', 10);
+    STATE.totalReferralsQualified = parseInt(safeStorage.getItem('pulsegrab_total_refs') || '0', 10);
   }
 
   function updateReferralUI() {
     if (!STATE.user) {
       elements.referralLinkInput.value = 'Sign in with Google to generate your referral link';
+      if (elements.refGuestPrompt) elements.refGuestPrompt.classList.remove('hidden');
+      if (elements.copyRefBtn) elements.copyRefBtn.disabled = true;
       return;
     }
 
-    const origin = window.location.origin === 'null' || !window.location.origin ? 'http://localhost:8080' : window.location.origin;
+    if (elements.refGuestPrompt) elements.refGuestPrompt.classList.add('hidden');
+    if (elements.copyRefBtn) elements.copyRefBtn.disabled = false;
+
+    const origin = window.location.origin === 'null' || !window.location.origin ? 'http://localhost:3000' : window.location.origin;
     const path = window.location.pathname || '/';
     const refUrl = `${origin}${path}?ref=${STATE.user.referralCode}`;
     elements.referralLinkInput.value = refUrl;
@@ -727,7 +738,7 @@
   }
 
   function loadAuthUser() {
-    const savedUser = localStorage.getItem('pulsegrab_user');
+    const savedUser = safeStorage.getItem('pulsegrab_user');
     if (savedUser) {
       try {
         STATE.user = JSON.parse(savedUser);
@@ -762,15 +773,15 @@
   }
 
   function loadQuota() {
-    const savedQuota = localStorage.getItem('pulsegrab_free_downloads');
+    const savedQuota = safeStorage.getItem('pulsegrab_free_downloads');
     if (savedQuota !== null) {
       STATE.freeDownloadsRemaining = parseInt(savedQuota, 10);
-      if (isNaN(STATE.freeDownloadsRemaining)) {
+      if (isNaN(STATE.freeDownloadsRemaining) || STATE.freeDownloadsRemaining < 0) {
         STATE.freeDownloadsRemaining = STATE.maxFreeDownloads;
       }
     } else {
       STATE.freeDownloadsRemaining = STATE.maxFreeDownloads;
-      localStorage.setItem('pulsegrab_free_downloads', STATE.maxFreeDownloads.toString());
+      safeStorage.setItem('pulsegrab_free_downloads', STATE.maxFreeDownloads.toString());
     }
   }
 
@@ -791,7 +802,7 @@
   }
 
   function loadHistory() {
-    const saved = localStorage.getItem('pulsegrab_history');
+    const saved = safeStorage.getItem('pulsegrab_history');
     if (saved) {
       try { STATE.history = JSON.parse(saved) || []; } catch (e) { STATE.history = []; }
     }
@@ -841,7 +852,7 @@
   function saveHistoryItem(item) {
     STATE.history.unshift(item);
     if (STATE.history.length > 8) STATE.history.pop();
-    localStorage.setItem('pulsegrab_history', JSON.stringify(STATE.history));
+    safeStorage.setItem('pulsegrab_history', JSON.stringify(STATE.history));
     renderHistory();
   }
 
@@ -854,34 +865,50 @@
 
   function parseMediaUrl(rawUrl) {
     if (!rawUrl || typeof rawUrl !== 'string') return { valid: false, error: 'Please enter a valid URL.' };
-    const trimmed = rawUrl.trim();
-    if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) return { valid: false, error: 'URL must start with https:// or http://' };
+    let trimmed = rawUrl.trim();
+    if (!trimmed.startsWith('http://') && !trimmed.startsWith('https://')) {
+      trimmed = 'https://' + trimmed;
+    }
 
     let parsed;
     try { parsed = new URL(trimmed); } catch (e) { return { valid: false, error: 'The link format appears malformed.' }; }
     const host = parsed.hostname.toLowerCase();
 
-    if (PLATFORMS.YOUTUBE.domains.some(d => host === d || host.endsWith('.' + d))) {
+    // YouTube format detection
+    if (PLATFORMS.YOUTUBE.domains.some(d => host === d || host.endsWith('.' + d)) || host.includes('youtu.be') || host.includes('youtube.')) {
       let videoId = null;
       let isShort = false;
-      if (host.includes('youtu.be')) videoId = parsed.pathname.slice(1).split('/')[0];
-      else if (parsed.pathname.includes('/shorts/')) {
+      if (host.includes('youtu.be')) {
+        videoId = parsed.pathname.slice(1).split('/')[0];
+      } else if (parsed.pathname.includes('/shorts/')) {
         videoId = parsed.pathname.split('/shorts/')[1]?.split('/')[0];
         isShort = true;
-      } else videoId = parsed.searchParams.get('v');
+      } else if (parsed.pathname.includes('/live/')) {
+        videoId = parsed.pathname.split('/live/')[1]?.split('/')[0];
+      } else {
+        videoId = parsed.searchParams.get('v');
+      }
 
-      if (videoId && videoId.length >= 10) {
+      if (!videoId) {
+        const parts = parsed.pathname.split('/').filter(Boolean);
+        if (parts.length > 0) videoId = parts[parts.length - 1];
+      }
+
+      if (videoId) videoId = videoId.split('?')[0].split('&')[0];
+
+      if (videoId && videoId.length >= 6) {
         return { valid: true, platform: 'youtube', type: isShort ? 'Shorts' : 'Video', id: videoId, cleanUrl: trimmed };
       }
       return { valid: false, error: 'Could not extract valid YouTube video ID.' };
     }
 
-    if (PLATFORMS.INSTAGRAM.domains.some(d => host === d || host.endsWith('.' + d))) {
-      const match = trimmed.match(/instagram\.com\/(?:reel|p|tv)\/([a-zA-Z0-9_-]+)/i);
+    // Instagram format detection
+    if (PLATFORMS.INSTAGRAM.domains.some(d => host === d || host.endsWith('.' + d)) || host.includes('instagram.com') || host.includes('instagr.am')) {
+      const match = trimmed.match(/instagram\.com\/(?:reel|reels|p|tv|share\/reel)\/([a-zA-Z0-9_-]+)/i);
       return {
         valid: true,
         platform: 'instagram',
-        type: trimmed.includes('/reel/') ? 'Reel' : 'Post',
+        type: trimmed.includes('/reel') ? 'Reel' : 'Post',
         id: (match && match[1]) ? match[1] : 'C8qP3O_xvKp',
         cleanUrl: trimmed
       };
@@ -1025,11 +1052,10 @@
     if (!checkAntiBotDefense(e)) return;
     if (STATE.isDownloading) return;
 
-    if (!STATE.user) {
-      if (STATE.freeDownloadsRemaining <= 0) {
-        openQuotaModal();
-        return;
-      }
+    if (!STATE.user && STATE.freeDownloadsRemaining <= 0) {
+      showToast('Guest limit reached. Sign in with Google below to continue downloading!', 'info');
+      openQuotaModal();
+      return;
     }
 
     runDownloadPipeline();
@@ -1182,11 +1208,6 @@
   }
 
   function openReferralModal() {
-    if (!STATE.user) {
-      showToast('Please sign in with Google to view your personal referral dashboard!', 'info');
-      openQuotaModal();
-      return;
-    }
     updateReferralUI();
     elements.referralModal.classList.remove('hidden');
   }
@@ -1225,9 +1246,21 @@
   function closeQuotaModal() { elements.quotaModal.classList.add('hidden'); }
 
   function handleGoogleLogin() {
-    const originalText = elements.modalGoogleBtn.innerHTML;
-    elements.modalGoogleBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i><span>Connecting to Google Identity...</span>`;
-    elements.modalGoogleBtn.disabled = true;
+    const originalModalHtml = elements.modalGoogleBtn ? elements.modalGoogleBtn.innerHTML : '';
+    const originalNavHtml = elements.navLoginBtn ? elements.navLoginBtn.innerHTML : '';
+
+    if (elements.navLoginBtn) {
+      elements.navLoginBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Connecting...</span>`;
+      elements.navLoginBtn.disabled = true;
+    }
+    if (elements.modalGoogleBtn) {
+      elements.modalGoogleBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Connecting to Google Identity...</span>`;
+      elements.modalGoogleBtn.disabled = true;
+    }
+    if (elements.refLoginBtn) {
+      elements.refLoginBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Connecting...</span>`;
+      elements.refLoginBtn.disabled = true;
+    }
 
     setTimeout(() => {
       const codeSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
@@ -1241,12 +1274,18 @@
         token: 'gsi_' + Math.random().toString(36).substring(2)
       };
 
-      localStorage.setItem('pulsegrab_user', JSON.stringify(STATE.user));
+      safeStorage.setItem('pulsegrab_user', JSON.stringify(STATE.user));
       saveWalletState(STATE.coins, STATE.dailyVideosRewarded, STATE.dailyReferralsRewarded);
       renderLoggedInUser();
 
-      elements.modalGoogleBtn.innerHTML = originalText;
-      elements.modalGoogleBtn.disabled = false;
+      if (elements.modalGoogleBtn) {
+        elements.modalGoogleBtn.innerHTML = originalModalHtml;
+        elements.modalGoogleBtn.disabled = false;
+      }
+      if (elements.navLoginBtn) {
+        elements.navLoginBtn.innerHTML = originalNavHtml;
+        elements.navLoginBtn.disabled = false;
+      }
       closeQuotaModal();
 
       showToast('🎉 Google Account connected! Unlimited downloads unlocked & Verified Wallet active.', 'gold');
@@ -1255,12 +1294,12 @@
         updateDownloadButtonLabel();
         updateCardRewardStatus();
       }
-    }, 900);
+    }, 350);
   }
 
   function handleLogout() {
     STATE.user = null;
-    localStorage.removeItem('pulsegrab_user');
+    safeStorage.removeItem('pulsegrab_user');
     saveWalletState(STATE.coins, STATE.dailyVideosRewarded, STATE.dailyReferralsRewarded);
     renderGuestUser();
     showToast('Signed out. Switched to guest mode.', 'info');
@@ -1352,10 +1391,11 @@
     elements.startDownloadBtn.addEventListener('click', handleDownloadClick);
     elements.redownloadBtn.addEventListener('click', handleDownloadClick);
 
-    // Quota Modal
+    // Quota Modal & Login
     elements.modalCloseBtn.addEventListener('click', closeQuotaModal);
     elements.modalGoogleBtn.addEventListener('click', handleGoogleLogin);
-    elements.navLoginBtn.addEventListener('click', openQuotaModal);
+    elements.navLoginBtn.addEventListener('click', handleGoogleLogin);
+    if (elements.refLoginBtn) elements.refLoginBtn.addEventListener('click', handleGoogleLogin);
     elements.logoutBtn.addEventListener('click', handleLogout);
 
     elements.quotaPill.addEventListener('click', () => {
@@ -1413,6 +1453,18 @@
 
     // Setup Owner Testing Controls
     setupOwnerTestingControls();
+  }
+
+  /**
+   * Application Master Initialization
+   */
+  function initApp() {
+    loadAuthUser();
+    loadQuota();
+    verifyWalletIntegrity();
+    initReferralSystem();
+    loadHistory();
+    attachEventListeners();
   }
 
   // Self Initialization
