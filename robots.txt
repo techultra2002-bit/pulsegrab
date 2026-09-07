@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://pulsegrab.netlify.app/sitemap.xml
+
+# Block unnecessary crawling of non-content paths
+Disallow: /node_modules/

@@ -1,0 +1,35 @@
+# Netlify Deployment Configuration for PulseGrab
+# This file tells Netlify how to serve your site correctly.
+
+[build]
+  # The folder to deploy — root since index.html is at the top level
+  publish = "."
+
+# Redirect all routes to index.html (Single Page App support)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security & Performance Headers for all pages
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Content-Security-Policy = "default-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.gstatic.com https://cdnjs.cloudflare.com https://accounts.google.com https://images.unsplash.com https://i.ytimg.com https://*.cdninstagram.com data: blob:; img-src 'self' https: data: blob:; media-src 'self' blob:; connect-src 'self' https://accounts.google.com;"
+    Cache-Control = "public, max-age=3600"
+
+# Cache static assets aggressively
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
