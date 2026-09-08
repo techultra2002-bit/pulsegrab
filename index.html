@@ -1,29 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PulseGrab | Secure Video Downloader, Cash Rewards & UPI Gateway</title>
-  <meta name="description" content="Download YouTube & Instagram videos in 720p/1080p or 320kbps MP3. Earn coins, unlock verified UPI gateway, and redeem up to ₹1,000 Mega Cash Rewards! 100% secure.">
-  <meta name="keywords" content="youtube downloader, instagram reel download, earn cash downloading videos, upi cash rewards, 1080p video, 720p download, mp3 song downloader, secure media grabber">
-  <meta name="theme-color" content="#080b14">
+  <title>PulseGrab | Download YouTube & Instagram Videos HD – Earn Cash Rewards</title>
+  <meta name="description"
+    content="PulseGrab: Download YouTube & Instagram videos in 1080p/720p or 320kbps MP3 for free. Earn coins on every HD download, invite friends for 250 coins each, and redeem up to ₹1,000 Mega Cash directly to your UPI. 100% secure & anti-bot protected.">
+  <meta name="keywords"
+    content="youtube downloader, instagram reel download, earn cash downloading videos, upi cash rewards, 1080p video, 720p download, mp3 song downloader, secure media grabber, pulsegrab, video downloader india">
+  <meta name="theme-color" content="#00f2fe">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://pulsegrab.netlify.app/">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PulseGrab">
 
   <!-- OpenGraph / Social Meta Tags -->
-  <meta property="og:title" content="PulseGrab | Ultra-Secure Media Downloader & Mega Cash Rewards">
-  <meta property="og:description" content="Download HD videos, earn coins, and redeem up to ₹1,000 Mega Cash Rewards via locked UPI!">
+  <meta property="og:title" content="PulseGrab | Download HD Videos & Earn ₹1,000 Mega Cash Rewards">
+  <meta property="og:description"
+    content="Download YouTube & Instagram videos in 1080p HD. Earn 10 Coins per download. Redeem up to ₹1,000 Mega Jackpot via locked UPI! 100% Secure.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://pulsegrab.netlify.app/">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&h=630&q=80">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="PulseGrab">
+  <meta property="og:locale" content="en_IN">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PulseGrab | Download HD Videos & Earn ₹1,000 Cash">
+  <meta name="twitter:description" content="Free HD video downloader with real cash rewards. Download YouTube & Instagram in 1080p. Earn coins, redeem via UPI!">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&h=630&q=80">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "PulseGrab",
+    "url": "https://pulsegrab.netlify.app/",
+    "description": "Free HD video downloader for YouTube and Instagram. Earn coins on every 720p/1080p download and redeem up to ₹1,000 cash via locked UPI.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    },
+    "featureList": "YouTube HD Download, Instagram Reel Download, Cash Rewards, UPI Payout, Referral Program",
+    "screenshot": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80"
+  }
+  </script>
 
   <!-- Modern Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <!-- FontAwesome 6 Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 
   <!-- App Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <!-- Ambient Gradient Glow Effects in Background -->
   <div class="bg-glow bg-glow-cyan" aria-hidden="true"></div>
@@ -53,13 +103,15 @@
           </div>
           <div class="wallet-info">
             <span class="wallet-label">My Wallet</span>
-            <span class="wallet-balance"><strong id="navCoinCount">0</strong> Coins (<span id="navInrValue">₹0.00</span>)</span>
+            <span class="wallet-balance"><strong id="navCoinCount">0</strong> Coins (<span
+                id="navInrValue">₹0.00</span>)</span>
           </div>
           <span class="wallet-redeem-badge"><i class="fa-solid fa-gift"></i> Redeem</span>
         </button>
 
         <!-- Refer & Earn Navbar Button -->
-        <button type="button" class="refer-nav-btn" id="navReferBtn" title="Invite friends & earn 250 Coins per friend!">
+        <button type="button" class="refer-nav-btn" id="navReferBtn"
+          title="Invite friends & earn 250 Coins per friend!">
           <i class="fa-solid fa-user-plus"></i>
           <span>Refer & Earn</span>
           <span class="nav-ref-bonus">+250</span>
@@ -87,12 +139,17 @@
 
         <!-- Auth Section -->
         <div id="authSection" class="auth-section">
-          <button id="navLoginBtn" class="btn-google-login" title="Sign in with Google to earn coins & unlock unlimited downloads">
+          <button id="navLoginBtn" class="btn-google-login"
+            title="Sign in with Google to earn coins & unlock unlimited downloads">
             <svg class="google-icon" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.29 21.36 7.37 24 12 24z"/>
-              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.98 0 12s.46 3.84 1.26 5.42l4.02-3.15z"/>
-              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.29 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+              <path fill="#4285F4"
+                d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" />
+              <path fill="#34A853"
+                d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.29 21.36 7.37 24 12 24z" />
+              <path fill="#FBBC05"
+                d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.98 0 12s.46 3.84 1.26 5.42l4.02-3.15z" />
+              <path fill="#EA4335"
+                d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.29 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
             </svg>
             <span>Sign in with Google</span>
           </button>
@@ -116,7 +173,7 @@
   <!-- Main Content -->
   <main class="main-content">
     <div class="container">
-      
+
       <!-- Referral Welcome Alert (Shown if visitor arrived via ?ref=CODE) -->
       <div id="referredWelcomeBanner" class="referred-welcome-banner hidden">
         <div class="welcome-icon"><i class="fa-solid fa-gift"></i></div>
@@ -138,17 +195,21 @@
               <span class="promo-badge ref-badge"><i class="fa-solid fa-crown"></i> ₹1,000 MEGA JACKPOT</span>
             </div>
             <h2 class="promo-title">
-              Download in <span class="highlight-text-gold">720p or 1080p</span> & Redeem Up to <span class="highlight-text-mega">₹1,000 Cash</span>!
+              Download in <span class="highlight-text-gold">720p or 1080p</span> & Redeem Up to <span
+                class="highlight-text-mega">₹1,000 Cash</span>!
             </h2>
             <p class="promo-subtitle">
-              Earn <strong>10 Coins</strong> per eligible HD video + <strong>250 Coins</strong> per friend. Reach 5,000 coins to unlock your <strong>Permanent Locked UPI Gateway</strong>!
+              Earn <strong>10 Coins</strong> per eligible HD video + <strong>250 Coins</strong> per friend. Reach 5,000
+              coins to unlock your <strong>Permanent Locked UPI Gateway</strong>!
             </p>
             <div class="promo-tiers-pills">
               <span class="tier-chip"><i class="fa-solid fa-coins"></i> 12,000 Coins = <strong>₹100</strong></span>
               <span class="tier-chip bonus"><i class="fa-solid fa-fire"></i> 18,000 Coins = <strong>₹200</strong></span>
               <span class="tier-chip"><i class="fa-solid fa-coins"></i> 20,000 Coins = <strong>₹250</strong></span>
-              <span class="tier-chip mega-chip"><i class="fa-solid fa-crown"></i> 50,000 Coins = <strong>₹1,000 MEGA</strong></span>
-              <span class="tier-chip ref-chip"><i class="fa-solid fa-user-plus"></i> Refer = <strong>+250 Coins</strong></span>
+              <span class="tier-chip mega-chip"><i class="fa-solid fa-crown"></i> 50,000 Coins = <strong>₹1,000
+                  MEGA</strong></span>
+              <span class="tier-chip ref-chip"><i class="fa-solid fa-user-plus"></i> Refer = <strong>+250
+                  Coins</strong></span>
             </div>
           </div>
           <div class="promo-content-right">
@@ -179,7 +240,8 @@
           Videos in HD & Earn Cash
         </h1>
         <p class="hero-subtitle">
-          Save your favorite videos in crisp <strong>720p, 1080p Full HD</strong> (with coins reward) or <strong>320kbps MP3</strong> audio.<br>
+          Save your favorite videos in crisp <strong>720p, 1080p Full HD</strong> (with coins reward) or <strong>320kbps
+            MP3</strong> audio.<br>
           Zero adware. No annoying redirects. Encrypted client protection.
         </p>
 
@@ -204,6 +266,48 @@
         </div>
       </section>
 
+      <!-- Live Stats Ticker -->
+      <section class="stats-ticker-section" aria-label="Platform statistics">
+        <div class="stats-ticker-grid">
+          <div class="stat-ticker-item">
+            <div class="stat-ticker-icon" style="background: linear-gradient(135deg,#00f2fe,#4facfe)">
+              <i class="fa-solid fa-cloud-arrow-down"></i>
+            </div>
+            <div class="stat-ticker-text">
+              <span class="stat-ticker-num" id="tickerDownloads">1,247,893</span>
+              <span class="stat-ticker-label">Total Downloads</span>
+            </div>
+          </div>
+          <div class="stat-ticker-item">
+            <div class="stat-ticker-icon" style="background: linear-gradient(135deg,#fbbf24,#f59e0b)">
+              <i class="fa-solid fa-coins"></i>
+            </div>
+            <div class="stat-ticker-text">
+              <span class="stat-ticker-num" id="tickerCoins">89,234,100</span>
+              <span class="stat-ticker-label">Coins Distributed</span>
+            </div>
+          </div>
+          <div class="stat-ticker-item">
+            <div class="stat-ticker-icon" style="background: linear-gradient(135deg,#10b981,#059669)">
+              <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="stat-ticker-text">
+              <span class="stat-ticker-num" id="tickerUsers">43,812</span>
+              <span class="stat-ticker-label">Active Earners</span>
+            </div>
+          </div>
+          <div class="stat-ticker-item">
+            <div class="stat-ticker-icon" style="background: linear-gradient(135deg,#ec4899,#8b5cf6)">
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+            </div>
+            <div class="stat-ticker-text">
+              <span class="stat-ticker-num" id="tickerPayouts">₹4,82,300</span>
+              <span class="stat-ticker-label">Cash Paid Out</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Interactive URL Input Bar Card -->
       <section class="downloader-card-wrapper">
         <div class="downloader-card">
@@ -212,14 +316,9 @@
               <div class="input-platform-indicator" id="inputIndicator" title="Platform auto-detected">
                 <i class="fa-solid fa-link"></i>
               </div>
-              <input 
-                type="url" 
-                id="urlInput" 
-                class="url-input" 
-                placeholder="Paste YouTube or Instagram link here (e.g. youtube.com/watch?v=... or instagram.com/reel/...)" 
-                autocomplete="off" 
-                spellcheck="false"
-              >
+              <input type="url" id="urlInput" class="url-input"
+                placeholder="Paste YouTube or Instagram link here (e.g. youtube.com/watch?v=... or instagram.com/reel/...)"
+                autocomplete="off" spellcheck="false">
               <div class="input-controls">
                 <button type="button" id="pasteBtn" class="btn-icon-action" title="Paste from clipboard">
                   <i class="fa-regular fa-clipboard"></i>
@@ -251,7 +350,8 @@
             <button type="button" class="demo-link-chip ig-demo" data-url="https://www.instagram.com/reel/C8qP3O_xvKp/">
               <i class="fa-brands fa-instagram"></i> Instagram Reel Demo (+10 Coins)
             </button>
-            <button type="button" class="demo-link-chip shorts-demo" data-url="https://www.youtube.com/shorts/3jWRrafh8JY">
+            <button type="button" class="demo-link-chip shorts-demo"
+              data-url="https://www.youtube.com/shorts/3jWRrafh8JY">
               <i class="fa-solid fa-film"></i> YouTube Shorts Demo
             </button>
           </div>
@@ -282,9 +382,11 @@
             <div class="media-header">
               <h2 id="mediaTitle" class="media-title">Cinematic 4K Visual Masterpiece - High Energy Beats</h2>
               <div class="media-meta-row">
-                <span class="author-badge" id="mediaAuthor"><i class="fa-solid fa-circle-check"></i> Creator Studio</span>
+                <span class="author-badge" id="mediaAuthor"><i class="fa-solid fa-circle-check"></i> Creator
+                  Studio</span>
                 <span class="meta-dot">•</span>
-                <span id="mediaQualityMax" class="quality-max-badge"><i class="fa-solid fa-award"></i> Up to 1080p FHD</span>
+                <span id="mediaQualityMax" class="quality-max-badge"><i class="fa-solid fa-award"></i> Up to 1080p
+                  FHD</span>
                 <span class="meta-dot">•</span>
                 <span class="meta-safety"><i class="fa-solid fa-shield-halved"></i> Clean Stream Verified</span>
               </div>
@@ -311,7 +413,8 @@
             <!-- Video Quality Options Grid (480p to 1080p) -->
             <div id="videoOptionsGrid" class="quality-options-grid">
               <!-- 1080p Option (ELIGIBLE FOR 10 COINS) -->
-              <label class="quality-option-card active reward-eligible" data-quality="1080p" data-format="mp4" data-size="48.2 MB">
+              <label class="quality-option-card active reward-eligible" data-quality="1080p" data-format="mp4"
+                data-size="48.2 MB">
                 <input type="radio" name="selectedQuality" value="1080p" checked>
                 <div class="quality-card-content">
                   <div class="quality-card-top">
@@ -330,7 +433,8 @@
               </label>
 
               <!-- 720p Option (ELIGIBLE FOR 10 COINS) -->
-              <label class="quality-option-card reward-eligible" data-quality="720p" data-format="mp4" data-size="24.1 MB">
+              <label class="quality-option-card reward-eligible" data-quality="720p" data-format="mp4"
+                data-size="24.1 MB">
                 <input type="radio" name="selectedQuality" value="720p">
                 <div class="quality-card-content">
                   <div class="quality-card-top">
@@ -478,37 +582,73 @@
         </div>
       </section>
 
+      <!-- How It Works Section -->
+      <section class="how-it-works-section">
+        <div class="section-header">
+          <span class="section-pill"><i class="fa-solid fa-circle-play"></i> Simple 3-Step Process</span>
+          <h2 class="section-title">How PulseGrab Works</h2>
+          <p class="section-desc">From link to file in seconds. Earn coins automatically on every eligible download.</p>
+        </div>
+        <div class="hiw-steps-grid">
+          <div class="hiw-step-card">
+            <div class="hiw-step-number">01</div>
+            <div class="hiw-step-icon"><i class="fa-solid fa-link"></i></div>
+            <h3 class="hiw-step-title">Paste Your Link</h3>
+            <p class="hiw-step-desc">Copy any YouTube video, Shorts URL, or Instagram Reel/Post link and paste it into the input bar above.</p>
+            <div class="hiw-step-connector"></div>
+          </div>
+          <div class="hiw-step-card">
+            <div class="hiw-step-number">02</div>
+            <div class="hiw-step-icon" style="background: linear-gradient(135deg,#8b5cf6,#ec4899)"><i class="fa-solid fa-sliders"></i></div>
+            <h3 class="hiw-step-title">Choose Quality</h3>
+            <p class="hiw-step-desc">Select 1080p Full HD, 720p HD, 480p, or MP3 audio. Pick 720p or 1080p to earn <strong>+10 Coins</strong> per download!</p>
+            <div class="hiw-step-connector"></div>
+          </div>
+          <div class="hiw-step-card">
+            <div class="hiw-step-number">03</div>
+            <div class="hiw-step-icon" style="background: linear-gradient(135deg,#fbbf24,#f59e0b)"><i class="fa-solid fa-coins"></i></div>
+            <h3 class="hiw-step-title">Download & Earn</h3>
+            <p class="hiw-step-desc">Your file downloads instantly. Coins are credited to your wallet automatically. Stack them up and redeem for real cash!</p>
+          </div>
+        </div>
+      </section>
+
       <!-- Security & Trust Proof Section -->
       <section class="security-features-section">
         <div class="section-header">
           <span class="section-pill"><i class="fa-solid fa-lock"></i> Enterprise Safety Standards</span>
           <h2 class="section-title">Built 100% Secure, Anti-Bot & Locked</h2>
-          <p class="section-desc">We use enterprise-grade cryptography, rate-limiting, and server hashing to ensure no exploits, scams, or bots can compromise user safety or the rewards system.</p>
+          <p class="section-desc">We use enterprise-grade cryptography, rate-limiting, and server hashing to ensure no
+            exploits, scams, or bots can compromise user safety or the rewards system.</p>
         </div>
 
         <div class="features-grid">
           <div class="feature-card">
             <div class="feature-icon icon-shield"><i class="fa-solid fa-shield-virus"></i></div>
             <h3>Anti-Bot & Autoclicker Defense</h3>
-            <p>Strict detection of WebDriver, headless runners, and macro autoclickers. Suspicious automated traffic is instantly blocked.</p>
+            <p>Strict detection of WebDriver, headless runners, and macro autoclickers. Suspicious automated traffic is
+              instantly blocked.</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon icon-lock"><i class="fa-solid fa-fingerprint"></i></div>
             <h3>HMAC Cryptographic Security</h3>
-            <p>Wallet balances, locked UPI status, and daily limits are cryptographically signed. DevTools tampering instantly freezes the account.</p>
+            <p>Wallet balances, locked UPI status, and daily limits are cryptographically signed. DevTools tampering
+              instantly freezes the account.</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon icon-key"><i class="fa-solid fa-lock"></i></div>
             <h3>Locked UPI Identity Gateway</h3>
-            <p>5,000 coin gateway threshold with a 1,000 coin activation fee to permanently lock your verified UPI ID against account hijackers.</p>
+            <p>5,000 coin gateway threshold with a 1,000 coin activation fee to permanently lock your verified UPI ID
+              against account hijackers.</p>
           </div>
 
           <div class="feature-card">
             <div class="feature-icon icon-bolt"><i class="fa-solid fa-crown"></i></div>
             <h3>Up to ₹1,000 Mega Cashout</h3>
-            <p>Real cash redemptions from ₹100 up to ₹1,000 Mega Jackpot directly to your locked UPI address with audit verification.</p>
+            <p>Real cash redemptions from ₹100 up to ₹1,000 Mega Jackpot directly to your locked UPI address with audit
+              verification.</p>
           </div>
         </div>
       </section>
@@ -550,7 +690,8 @@
       <!-- Wallet Balance Header -->
       <div class="rewards-balance-header">
         <div class="balance-big-display">
-          <span class="balance-coins"><i class="fa-solid fa-coins"></i> <strong id="modalCoinCount">0</strong> Coins</span>
+          <span class="balance-coins"><i class="fa-solid fa-coins"></i> <strong id="modalCoinCount">0</strong>
+            Coins</span>
           <span class="balance-inr">Approx Value: <strong id="modalInrValue">₹0.00</strong></span>
         </div>
         <div class="balance-limits-box">
@@ -577,13 +718,15 @@
         <div class="gateway-details">
           <div class="gateway-title" id="gatewayTitle">Payment Gateway: Locked</div>
           <div class="gateway-desc" id="gatewayDesc">
-            You must reach at least <strong>5,000 Coins</strong> before activating the payment receiving option. (Progress: <span id="gatewayProgressText">0 / 5,000</span>)
+            You must reach at least <strong>5,000 Coins</strong> before activating the payment receiving option.
+            (Progress: <span id="gatewayProgressText">0 / 5,000</span>)
           </div>
           <!-- Locked UPI Display (Visible when active) -->
           <div id="lockedUpiDisplayRow" class="locked-upi-display-row hidden">
             <span class="locked-upi-label">🔒 Verified Locked UPI ID:</span>
             <span class="locked-upi-val" id="displayLockedUpi">not_set@upi</span>
-            <button type="button" id="btnChangeUpi" class="btn-change-upi" title="Change your UPI ID (-1,000 Coins fee)">
+            <button type="button" id="btnChangeUpi" class="btn-change-upi"
+              title="Change your UPI ID (-1,000 Coins fee)">
               <i class="fa-solid fa-pen-to-square"></i> Change (-1,000 Coins)
             </button>
           </div>
@@ -598,9 +741,11 @@
       <!-- Quick Setup UPI Input Box (Triggered when user pays 1,000 coins) -->
       <div id="upiSetupBox" class="upi-setup-box hidden">
         <h4 class="setup-title"><i class="fa-solid fa-shield-keyhole"></i> Enter UPI ID to Lock to Your Account:</h4>
-        <p class="setup-sub">Once entered, this UPI ID will be permanently locked for all cashouts. Changing it later will require a 1,000 Coins security verification fee.</p>
+        <p class="setup-sub">Once entered, this UPI ID will be permanently locked for all cashouts. Changing it later
+          will require a 1,000 Coins security verification fee.</p>
         <div class="upi-setup-input-group">
-          <input type="text" id="setupUpiInput" class="payout-text-input" placeholder="e.g. yourname@oksbi or 9876543210@paytm">
+          <input type="text" id="setupUpiInput" class="payout-text-input"
+            placeholder="e.g. yourname@oksbi or 9876543210@paytm">
           <button type="button" id="btnSaveAndLockUpi" class="btn-save-lock-upi">
             <i class="fa-solid fa-lock"></i> Lock UPI ID
           </button>
@@ -610,7 +755,7 @@
       <!-- Cashout Redemption Tiers (4 Tiers including 50k / ₹1,000 Mega Reward) -->
       <h4 class="tiers-section-title">Select Cashout Redemption Tier:</h4>
       <div class="cashout-tiers-grid-v2">
-        
+
         <!-- Tier 1: 12,000 Coins -> 100 Rs -->
         <div class="tier-card" data-coins="12000" data-inr="100">
           <div class="tier-header">
@@ -681,7 +826,8 @@
         <div class="owner-test-btns">
           <button type="button" id="btnTestAdd5kCoins" class="btn-owner-pill">+5,000 Coins (Test Gateway)</button>
           <button type="button" id="btnTestAdd12kCoins" class="btn-owner-pill">+12,000 Coins (Test ₹100)</button>
-          <button type="button" id="btnTestAdd50kCoins" class="btn-owner-pill gold">+50,000 Coins (Test ₹1,000 Mega)</button>
+          <button type="button" id="btnTestAdd50kCoins" class="btn-owner-pill gold">+50,000 Coins (Test ₹1,000
+            Mega)</button>
         </div>
       </div>
 
@@ -708,9 +854,11 @@
       </div>
 
       <div class="ref-modal-header">
-        <h3 class="ref-modal-title">Invite Friends & Earn <span class="highlight-text-gold">250 Coins</span> per Friend!</h3>
+        <h3 class="ref-modal-title">Invite Friends & Earn <span class="highlight-text-gold">250 Coins</span> per Friend!
+        </h3>
         <p class="ref-modal-desc">
-          Share your referral link. When your friend signs up and downloads <strong>at least 3 videos</strong>, you get <strong>250 Coins</strong> credited instantly! (Max 4 rewarded referrals per day).
+          Share your referral link. When your friend signs up and downloads <strong>at least 3 videos</strong>, you get
+          <strong>250 Coins</strong> credited instantly! (Max 4 rewarded referrals per day).
         </p>
       </div>
 
@@ -718,19 +866,25 @@
       <div class="ref-link-box">
         <span class="ref-link-label">Your Unique Referral Link:</span>
         <div class="ref-input-group">
-          <input type="text" id="referralLinkInput" class="ref-url-input" readonly value="https://pulsegrab.net/?ref=MYCODE">
+          <input type="text" id="referralLinkInput" class="ref-url-input" readonly
+            value="https://pulsegrab.net/?ref=MYCODE">
           <button type="button" id="copyRefBtn" class="btn-copy-ref">
             <i class="fa-regular fa-clone"></i>
             <span>Copy</span>
           </button>
         </div>
         <div id="refGuestPrompt" class="ref-guest-prompt" style="margin-top: 10px;">
-          <button type="button" id="refLoginBtn" class="btn-google-login" style="width: 100%; justify-content: center; padding: 10px 14px; font-weight: 600;">
+          <button type="button" id="refLoginBtn" class="btn-google-login"
+            style="width: 100%; justify-content: center; padding: 10px 14px; font-weight: 600;">
             <svg class="google-icon" viewBox="0 0 24 24" style="width: 18px; height: 18px; margin-right: 8px;">
-              <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-              <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.29 21.36 7.37 24 12 24z"/>
-              <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.98 0 12s.46 3.84 1.26 5.42l4.02-3.15z"/>
-              <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.29 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+              <path fill="#4285F4"
+                d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" />
+              <path fill="#34A853"
+                d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.29 21.36 7.37 24 12 24z" />
+              <path fill="#FBBC05"
+                d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.98 0 12s.46 3.84 1.26 5.42l4.02-3.15z" />
+              <path fill="#EA4335"
+                d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.29 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
             </svg>
             <span>Sign in with Google to Unlock Your Referral Link</span>
           </button>
@@ -772,9 +926,12 @@
       <div class="ref-rules-box">
         <h4><i class="fa-solid fa-shield-halved"></i> Anti-Scam Qualification Rules:</h4>
         <ul>
-          <li><i class="fa-solid fa-circle-check"></i> Friend <strong>must download at least 3 videos</strong> for reward to be credited.</li>
-          <li><i class="fa-solid fa-circle-check"></i> Maximum <strong>4 rewarded referrals per day</strong> (1,000 coins daily max).</li>
-          <li><i class="fa-solid fa-ban"></i> <strong>Self-referrals are blocked:</strong> Using your own link or multi-accounting results in fraud lock.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Friend <strong>must download at least 3 videos</strong> for
+            reward to be credited.</li>
+          <li><i class="fa-solid fa-circle-check"></i> Maximum <strong>4 rewarded referrals per day</strong> (1,000
+            coins daily max).</li>
+          <li><i class="fa-solid fa-ban"></i> <strong>Self-referrals are blocked:</strong> Using your own link or
+            multi-accounting results in fraud lock.</li>
         </ul>
       </div>
 
@@ -793,7 +950,7 @@
       <button type="button" class="modal-close" id="modalCloseBtn" aria-label="Close modal">
         <i class="fa-solid fa-xmark"></i>
       </button>
-      
+
       <div class="modal-badge">
         <i class="fa-solid fa-crown"></i>
         <span>Free Quota Reached</span>
@@ -805,7 +962,8 @@
         </div>
         <h3 class="modal-title">Sign In with Google to Continue & Earn!</h3>
         <p class="modal-desc">
-          You have used your 3 guest downloads. Sign in with Google to unlock <strong>Unlimited Downloads</strong>, earn <strong>10 Coins per 720p/1080p video</strong>, and aim for the <strong>₹1,000 Mega Cashout</strong>!
+          You have used your 3 guest downloads. Sign in with Google to unlock <strong>Unlimited Downloads</strong>, earn
+          <strong>10 Coins per 720p/1080p video</strong>, and aim for the <strong>₹1,000 Mega Cashout</strong>!
         </p>
       </div>
 
@@ -831,10 +989,14 @@
       <div class="modal-actions">
         <button type="button" id="modalGoogleBtn" class="btn-modal-google">
           <svg class="google-icon" viewBox="0 0 24 24">
-            <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-            <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.29 21.36 7.37 24 12 24z"/>
-            <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.98 0 12s.46 3.84 1.26 5.42l4.02-3.15z"/>
-            <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.29 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+            <path fill="#4285F4"
+              d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z" />
+            <path fill="#34A853"
+              d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.26v3.15C3.29 21.36 7.37 24 12 24z" />
+            <path fill="#FBBC05"
+              d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.26C.46 8.16 0 9.98 0 12s.46 3.84 1.26 5.42l4.02-3.15z" />
+            <path fill="#EA4335"
+              d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.37 0 3.29 2.64 1.26 6.58l4.02 3.15c.95-2.83 3.6-4.98 6.72-4.98z" />
           </svg>
           <span>Continue with Google</span>
         </button>
@@ -854,12 +1016,14 @@
         <i class="fa-solid fa-shield-virus"></i> SECURITY VIOLATION DETECTED
       </div>
       <div class="modal-header">
-        <div class="modal-icon-glow" style="background: linear-gradient(135deg, #ef4444, #b91c1c); box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); color: white;">
+        <div class="modal-icon-glow"
+          style="background: linear-gradient(135deg, #ef4444, #b91c1c); box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); color: white;">
           <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
         <h3 class="modal-title" style="color: #f87171;">Account Action Frozen</h3>
         <p class="modal-desc" id="securityAlertReason">
-          Automated bot activity or local memory tampering was detected. For platform integrity, balance has been secured.
+          Automated bot activity or local memory tampering was detected. For platform integrity, balance has been
+          secured.
         </p>
       </div>
       <button type="button" class="btn-confirm-payout" id="securityAlertAcknowledgeBtn" style="background: #ef4444;">
@@ -868,26 +1032,61 @@
     </div>
   </div>
 
+  <!-- Floating Referral Action Button -->
+  <button type="button" id="fabReferBtn" class="fab-refer-btn" title="Invite friends & earn 250 Coins each!" aria-label="Open Referral Program">
+    <i class="fa-solid fa-user-plus"></i>
+    <span class="fab-label">Refer & Earn</span>
+    <span class="fab-badge">+250</span>
+  </button>
+
   <!-- Toast Notification System -->
   <div id="toastContainer" class="toast-container"></div>
 
   <!-- Footer -->
   <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-brand">
-        <span class="brand-name">Pulse<span class="gradient-text">Grab</span></span>
-        <p>The fast, high-quality, and 100% secure video downloader, referral, and cash rewards platform for creators and students.</p>
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <div class="footer-logo">
+          <div class="brand-icon" style="width:36px;height:36px;font-size:1rem;"><i class="fa-solid fa-bolt-lightning"></i></div>
+          <span class="brand-name">Pulse<span class="gradient-text">Grab</span></span>
+        </div>
+        <p class="footer-tagline">The fast, secure HD video downloader with real cash rewards. Earn coins, refer friends, and cash out to UPI.</p>
+        <div class="footer-social-row">
+          <a href="https://api.whatsapp.com/send?text=Check%20out%20PulseGrab%20-%20Download%20HD%20videos%20%26%20earn%20cash!%20https://pulsegrab.netlify.app" target="_blank" rel="noopener" class="footer-social-btn whatsapp" aria-label="Share on WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+          <a href="https://t.me/share/url?url=https://pulsegrab.netlify.app&text=Download%20HD%20Videos%20%26%20Earn%20Cash%20on%20PulseGrab!" target="_blank" rel="noopener" class="footer-social-btn telegram" aria-label="Share on Telegram"><i class="fa-brands fa-telegram"></i></a>
+          <a href="https://twitter.com/intent/tweet?text=Download%20YouTube%20%26%20Instagram%20videos%20in%201080p%20and%20earn%20real%20cash%20with%20PulseGrab!&url=https://pulsegrab.netlify.app" target="_blank" rel="noopener" class="footer-social-btn twitter" aria-label="Share on Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
       </div>
-      <div class="footer-notes">
-        <p class="disclaimer">
-          <strong>Notice:</strong> PulseGrab is intended for personal backup and educational use for content you own or have permission to download. Coin rewards, locked UPI gateway, and referrals require compliance with strict anti-abuse and anti-bot policies.
-        </p>
-        <p class="copyright">© 2026 PulseGrab. All rights reserved. End-to-End Encrypted.</p>
+      <div class="footer-links-col">
+        <h4 class="footer-links-title">Quick Actions</h4>
+        <ul class="footer-links-list">
+          <li><a href="#" onclick="document.getElementById('urlInput').focus(); return false;"><i class="fa-solid fa-cloud-arrow-down"></i> Download a Video</a></li>
+          <li><a href="#" onclick="document.getElementById('openRewardsBtn').click(); return false;"><i class="fa-solid fa-wallet"></i> My Rewards Wallet</a></li>
+          <li><a href="#" onclick="document.getElementById('navReferBtn').click(); return false;"><i class="fa-solid fa-user-plus"></i> Referral Program</a></li>
+        </ul>
       </div>
+      <div class="footer-links-col">
+        <h4 class="footer-links-title">Earn More</h4>
+        <ul class="footer-links-list">
+          <li><i class="fa-solid fa-circle-check" style="color:#10b981"></i> 10 Coins per 720p/1080p download</li>
+          <li><i class="fa-solid fa-circle-check" style="color:#10b981"></i> 250 Coins per referred friend</li>
+          <li><i class="fa-solid fa-circle-check" style="color:#10b981"></i> Up to 10 rewarded downloads/day</li>
+          <li><i class="fa-solid fa-circle-check" style="color:#10b981"></i> Max 4 referral rewards/day</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer"><strong>Notice:</strong> PulseGrab is intended for personal backup and educational use for content you own or have permission to download. Coin rewards require compliance with anti-abuse and anti-bot policies.</p>
+      <p class="copyright">© 2026 PulseGrab. All rights reserved. <i class="fa-solid fa-lock" style="color:#00f2fe;font-size:0.75rem"></i> End-to-End Encrypted.</p>
     </div>
   </footer>
 
+  <!-- Site Configuration (must load before app scripts) -->
+  <script src="config.js"></script>
+
   <!-- Main JavaScript Logic -->
   <script src="main.js?v=20260907_live"></script>
+
 </body>
+
 </html>

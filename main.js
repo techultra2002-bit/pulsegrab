@@ -17,6 +17,12 @@
   // Secret salt for cryptographic wallet verification (anti-tamper)
   const WALLET_SALT = 'PG_SECURE_HASH_SALT_v2026_987x!';
 
+  // Production URL config — reads from a global window variable injected by config.js,
+  // or falls back to the current page's origin. Never falls back to localhost.
+  const SITE_URL = (typeof window.__PULSEGRAB_SITE_URL__ !== 'undefined' && window.__PULSEGRAB_SITE_URL__)
+    ? window.__PULSEGRAB_SITE_URL__
+    : (window.location.origin && window.location.origin !== 'null' ? window.location.origin : '');
+
   // Safe localStorage helper to prevent crashes in private browsing or iframe modes
   const safeStorage = {
     getItem(key) {
@@ -666,7 +672,7 @@
     if (elements.refGuestPrompt) elements.refGuestPrompt.classList.add('hidden');
     if (elements.copyRefBtn) elements.copyRefBtn.disabled = false;
 
-    const origin = window.location.origin === 'null' || !window.location.origin ? 'http://localhost:3000' : window.location.origin;
+    const origin = SITE_URL || window.location.origin || '';
     const path = window.location.pathname || '/';
     const refUrl = `${origin}${path}?ref=${STATE.user.referralCode}`;
     elements.referralLinkInput.value = refUrl;
@@ -1453,6 +1459,33 @@
 
     // Setup Owner Testing Controls
     setupOwnerTestingControls();
+
+    // Floating Referral FAB
+    const fabReferBtn = document.getElementById('fabReferBtn');
+    if (fabReferBtn) fabReferBtn.addEventListener('click', openReferralModal);
+  }
+
+  /**
+   * Live Stats Counter (social proof ticker)
+   */
+  function initStatsCounter() {
+    const counters = [
+      { id: 'tickerDownloads', base: 1247893, rate: 3 },
+      { id: 'tickerCoins',     base: 89234100, rate: 130 },
+      { id: 'tickerUsers',     base: 43812,  rate: 1 },
+    ];
+
+    counters.forEach(({ id, base, rate }) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      let val = base + Math.floor(Math.random() * rate * 5);
+      el.textContent = val.toLocaleString('en-IN');
+
+      setInterval(() => {
+        val += Math.floor(Math.random() * rate * 2 + 1);
+        el.textContent = val.toLocaleString('en-IN');
+      }, 4000 + Math.random() * 3000);
+    });
   }
 
   /**
@@ -1465,6 +1498,7 @@
     initReferralSystem();
     loadHistory();
     attachEventListeners();
+    initStatsCounter();
   }
 
   // Self Initialization
