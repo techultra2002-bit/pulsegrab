@@ -2493,3 +2493,296 @@ body {
   letter-spacing: 2px;
 }
 
+/* ================================================= */
+/* COMPREHENSIVE MOBILE & TABLET RESPONSIVE DESIGN   */
+/* ================================================= */
+
+/* Tablet & Mobile Breakpoint (<= 768px) */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  /* Navigation Header: 2-Row Native App Layout */
+  .nav-container {
+    flex-wrap: wrap;
+    padding: 0.65rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .brand {
+    order: 1;
+    gap: 0.5rem;
+  }
+
+  .logo-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .brand-name {
+    font-size: 1.05rem;
+  }
+
+  .brand-tag {
+    font-size: 0.6rem;
+  }
+
+  .nav-actions {
+    order: 2;
+    margin-left: auto;
+    gap: 0.5rem;
+  }
+
+  .coin-pill {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.8rem;
+    gap: 0.3rem;
+  }
+
+  .coin-amount {
+    font-size: 0.85rem;
+  }
+
+  .coin-label {
+    display: none; /* Keep pill compact on mobile */
+  }
+
+  .user-profile-pill {
+    padding: 0.25rem 0.6rem 0.25rem 0.35rem;
+  }
+
+  .user-name-tiny {
+    max-width: 75px;
+    font-size: 0.75rem;
+  }
+
+  /* Horizontal swipeable tabs like YouTube / Instagram app */
+  .nav-tabs {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.25rem 0.35rem;
+    gap: 0.35rem;
+    background: rgba(15, 20, 34, 0.8);
+  }
+
+  .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav-tab {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+  }
+
+  /* Layout Containers */
+  .main-layout {
+    grid-template-columns: 1fr;
+    padding: 0 1rem;
+    margin: 1rem auto;
+    gap: 1.25rem;
+  }
+
+  .adsense-banner-container {
+    padding: 0 1rem;
+    margin: 0.6rem auto 0;
+  }
+
+  .adsense-slot.top-banner {
+    min-height: 60px;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .ad-headline {
+    font-size: 0.75rem;
+  }
+
+  .content-sidebar {
+    order: 2;
+  }
+
+  /* Hero & Downloader */
+  .hero-box {
+    padding: 1.5rem 1rem;
+    border-radius: var(--radius-md);
+  }
+
+  .hero-title {
+    font-size: 1.55rem;
+    line-height: 1.25;
+  }
+
+  .hero-subtitle {
+    font-size: 0.88rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Search Input Form */
+  .search-wrapper {
+    flex-direction: column;
+    padding: 0.75rem;
+    gap: 0.65rem;
+    border-radius: var(--radius-sm);
+  }
+
+  .search-input {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.25rem 0;
+  }
+
+  .btn-action {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 0.95rem;
+    text-align: center;
+    justify-content: center;
+  }
+
+  /* Quick Samples */
+  .quick-samples {
+    gap: 0.4rem;
+  }
+
+  .sample-chip {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.72rem;
+  }
+
+  /* Daily Reward Meter */
+  .daily-meter-card {
+    padding: 1rem;
+  }
+
+  .meter-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .reset-badge {
+    align-self: flex-start;
+    font-size: 0.75rem;
+  }
+
+  .meter-stats-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  /* Media Preview Card */
+  .media-result-card {
+    padding: 1rem;
+  }
+
+  .media-preview-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .media-thumb-wrap {
+    width: 100%;
+    height: 180px;
+  }
+
+  .media-title {
+    font-size: 1rem;
+  }
+
+  .streams-grid {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .stream-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.85rem;
+  }
+
+  .stream-info {
+    width: 100%;
+  }
+
+  .btn-stream-dl {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  /* Rules & Info */
+  .rules-grid {
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+  }
+
+  /* Modals & Dialogs */
+  .modal-card,
+  .rewarded-ad-modal-card,
+  .exit-deal-card {
+    width: 94vw !important;
+    max-width: 94vw !important;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 1.25rem 1rem !important;
+  }
+
+  /* Floating Deal Pill */
+  .floating-deal-pill {
+    bottom: 12px;
+    right: 12px;
+    max-width: calc(100vw - 24px);
+    font-size: 0.75rem;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .pill-text {
+    max-width: 170px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Small Smartphone Breakpoint (<= 480px) */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.35rem;
+  }
+
+  .brand-name {
+    font-size: 0.95rem;
+  }
+
+  .media-thumb-wrap {
+    height: 150px;
+  }
+
+  .search-wrapper {
+    padding: 0.6rem;
+  }
+
+  .btn-action {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .daily-meter-card,
+  .media-result-card,
+  .info-rules-card,
+  .sidebar-card {
+    padding: 0.85rem;
+  }
+}
+
