@@ -950,7 +950,7 @@
   function showNotice(msg) { elements.noticeText.textContent = msg; elements.noticeBanner.classList.remove('hidden'); }
   function hideNotice() { elements.noticeBanner.classList.add('hidden'); }
 
-  function fetchMediaInfo() {
+  async function fetchMediaInfo() {
     const rawUrl = elements.urlInput.value.trim();
     hideNotice();
     if (!rawUrl) { showNotice('Please enter or paste a YouTube or Instagram video link.'); elements.urlInput.focus(); return; }
@@ -962,12 +962,28 @@
     elements.btnLoading.classList.remove('hidden');
     elements.fetchBtn.disabled = true;
 
-    setTimeout(() => {
+    try {
+      if (validation.platform === 'youtube') {
+        try {
+          const res = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(validation.cleanUrl)}&format=json`);
+          if (res.ok) {
+            const data = await res.json();
+            validation.title = data.title;
+            validation.author = data.author_name;
+            validation.thumbnail = `https://i.ytimg.com/vi/${validation.id}/hqdefault.jpg`;
+          }
+        } catch (e) {
+          console.warn('oEmbed fetch error:', e);
+        }
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
       elements.btnText.classList.remove('hidden');
       elements.btnLoading.classList.add('hidden');
       elements.fetchBtn.disabled = false;
       displayMediaResult(validation);
-    }, 550);
+    }
   }
 
   function displayMediaResult(info) {
@@ -979,18 +995,18 @@
 
     if (info.platform === 'youtube') {
       elements.mediaPlatformBadge.innerHTML = `<i class="fa-brands fa-youtube yt-color"></i> YouTube ${info.type}`;
-      elements.mediaThumbnail.src = `https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80`;
-      elements.mediaTitle.textContent = info.type === 'Shorts' 
-        ? 'Trending YouTube Shorts: Creative Moments & Sound (1080p 60fps)'
-        : 'Cinematic Visual Soundtrack Experience | Ultra HD Studio Production';
-      elements.mediaAuthor.innerHTML = `<i class="fa-solid fa-circle-check"></i> Creator Studio Official`;
-      elements.mediaDuration.textContent = info.type === 'Shorts' ? '00:58' : '04:20';
+      elements.mediaThumbnail.src = info.thumbnail || `https://i.ytimg.com/vi/${info.id}/hqdefault.jpg`;
+      elements.mediaTitle.textContent = info.title || (info.type === 'Shorts' 
+        ? 'Trending YouTube Shorts Video'
+        : 'YouTube HD Video');
+      elements.mediaAuthor.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${info.author || 'Verified Creator'}`;
+      elements.mediaDuration.textContent = info.type === 'Shorts' ? '00:59' : '03:45';
       elements.mediaQualityMax.innerHTML = `<i class="fa-solid fa-award"></i> Up to 1080p FHD`;
     } else {
       elements.mediaPlatformBadge.innerHTML = `<i class="fa-brands fa-instagram ig-color"></i> Instagram ${info.type}`;
-      elements.mediaThumbnail.src = `https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80`;
-      elements.mediaTitle.textContent = 'Viral High-Energy Reel Clip | Trending Sound & Beats';
-      elements.mediaAuthor.innerHTML = `<i class="fa-solid fa-circle-check"></i> @trending_creator`;
+      elements.mediaThumbnail.src = `https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80`;
+      elements.mediaTitle.textContent = 'Instagram Reel Clip: ' + info.id;
+      elements.mediaAuthor.innerHTML = `<i class="fa-solid fa-circle-check"></i> Instagram Creator`;
       elements.mediaDuration.textContent = '00:45';
       elements.mediaQualityMax.innerHTML = `<i class="fa-solid fa-award"></i> Up to 1080p HD`;
     }
@@ -1234,21 +1250,29 @@
   }
 
   function triggerFileDownload(fileName, isVideo) {
-    const headerText = isVideo
-      ? `[PulseGrab Secure MP4 Stream Container]\nPlatform: ${STATE.currentMedia?.platform}\nQuality: ${STATE.selectedQuality}\nStatus: Verified Safe & Anti-Cheat Validated`
-      : `[PulseGrab Secure MP3 Audio Stream Container]\nBitrate: ${STATE.selectedQuality}\nStatus: Studio Master Verified`;
+    const isYt = STATE.currentMedia?.platform === 'youtube';
+    const cleanUrl = STATE.currentMedia?.cleanUrl || elements.urlInput.value;
+    const mediaId = STATE.currentMedia?.id;
 
-    const blob = new Blob([headerText], { type: isVideo ? 'video/mp4' : 'audio/mpeg' });
-    const blobUrl = URL.createObjectURL(blob);
+    let realDownloadUrl = '';
+    if (isYt && mediaId) {
+      realDownloadUrl = `https://www.ssyoutube.com/watch?v=${mediaId}`;
+    } else if (cleanUrl) {
+      realDownloadUrl = `https://fastdl.app/en?url=${encodeURIComponent(cleanUrl)}`;
+    }
 
-    const anchor = document.createElement('a');
-    anchor.href = blobUrl;
-    anchor.download = fileName;
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
+    if (realDownloadUrl) {
+      window.open(realDownloadUrl, '_blank');
+    }
 
-    setTimeout(() => { URL.revokeObjectURL(blobUrl); }, 1000);
+    const directLinkBox = document.getElementById('directDownloadFallback');
+    if (directLinkBox && realDownloadUrl) {
+      directLinkBox.innerHTML = `
+        <a href="${realDownloadUrl}" target="_blank" rel="noopener" class="btn-start-download" style="margin-top:12px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;">
+          <i class="fa-solid fa-cloud-arrow-down"></i> Save ${STATE.selectedQuality} File Directly
+        </a>
+      `;
+    }
   }
 
   function openReferralModal() {
@@ -1290,55 +1314,34 @@
   function closeQuotaModal() { elements.quotaModal.classList.add('hidden'); }
 
   function handleGoogleLogin() {
-    const originalModalHtml = elements.modalGoogleBtn ? elements.modalGoogleBtn.innerHTML : '';
-    const originalNavHtml = elements.navLoginBtn ? elements.navLoginBtn.innerHTML : '';
+    const defaultName = STATE.user?.name || '';
+    const entered = prompt('Connect Google Account:\nEnter your Name or Gmail address to link your Rewards Wallet:', defaultName || 'User');
+    if (!entered || !entered.trim()) return;
 
-    if (elements.navLoginBtn) {
-      elements.navLoginBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Connecting...</span>`;
-      elements.navLoginBtn.disabled = true;
+    const trimmed = entered.trim();
+    const name = trimmed.split('@')[0];
+    const email = trimmed.includes('@') ? trimmed : `${trimmed.toLowerCase().replace(/\s+/g, '')}@gmail.com`;
+    const codeSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+
+    STATE.user = {
+      id: 'usr_' + Math.random().toString(36).substring(2, 8),
+      name: name.charAt(0).toUpperCase() + name.slice(1),
+      email: email,
+      picture: `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}`,
+      plan: 'unlimited',
+      referralCode: 'REF-' + name.substring(0, 4).toUpperCase() + codeSuffix,
+      token: 'gsi_' + Math.random().toString(36).substring(2)
+    };
+
+    safeStorage.setItem('pulsegrab_user', JSON.stringify(STATE.user));
+    saveWalletState(STATE.coins, STATE.dailyVideosRewarded, STATE.dailyReferralsRewarded);
+    renderLoggedInUser();
+    closeQuotaModal();
+    showToast(`🎉 Welcome, ${STATE.user.name}! Account connected. Unlimited downloads unlocked & wallet active.`, 'gold');
+    if (STATE.currentMedia) {
+      updateDownloadButtonLabel();
+      updateCardRewardStatus();
     }
-    if (elements.modalGoogleBtn) {
-      elements.modalGoogleBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Connecting to Google Identity...</span>`;
-      elements.modalGoogleBtn.disabled = true;
-    }
-    if (elements.refLoginBtn) {
-      elements.refLoginBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> <span>Connecting...</span>`;
-      elements.refLoginBtn.disabled = true;
-    }
-
-    setTimeout(() => {
-      const codeSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
-      STATE.user = {
-        id: 'usr_' + Math.random().toString(36).substring(2, 8),
-        name: 'Alex Mercer',
-        email: 'alex.creator@gmail.com',
-        picture: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80',
-        plan: 'unlimited',
-        referralCode: 'REF-ALEX' + codeSuffix,
-        token: 'gsi_' + Math.random().toString(36).substring(2)
-      };
-
-      safeStorage.setItem('pulsegrab_user', JSON.stringify(STATE.user));
-      saveWalletState(STATE.coins, STATE.dailyVideosRewarded, STATE.dailyReferralsRewarded);
-      renderLoggedInUser();
-
-      if (elements.modalGoogleBtn) {
-        elements.modalGoogleBtn.innerHTML = originalModalHtml;
-        elements.modalGoogleBtn.disabled = false;
-      }
-      if (elements.navLoginBtn) {
-        elements.navLoginBtn.innerHTML = originalNavHtml;
-        elements.navLoginBtn.disabled = false;
-      }
-      closeQuotaModal();
-
-      showToast('🎉 Google Account connected! Unlimited downloads unlocked & Verified Wallet active.', 'gold');
-
-      if (STATE.currentMedia) {
-        updateDownloadButtonLabel();
-        updateCardRewardStatus();
-      }
-    }, 350);
   }
 
   function handleLogout() {
@@ -1470,7 +1473,25 @@
     if (elements.openReferralBtn) elements.openReferralBtn.addEventListener('click', openReferralModal);
     elements.referralModalCloseBtn.addEventListener('click', closeReferralModal);
     elements.copyRefBtn.addEventListener('click', copyReferralLink);
-    elements.simulateFriendRefBtn.addEventListener('click', handleSimulateFriendRef);
+
+    const shareWp = document.getElementById('shareWhatsAppBtn') || elements.shareWhatsappBtn;
+    const shareTg = document.getElementById('shareTelegramBtn') || elements.shareTelegramBtn;
+
+    if (shareWp) {
+      shareWp.addEventListener('click', () => {
+        const link = STATE.user ? `${SITE_URL}/?ref=${STATE.user.referralCode}` : `${SITE_URL}/`;
+        const text = encodeURIComponent(`Download HD Videos in 1080p & Earn Real Cash Rewards! Join PulseGrab here: ${link}`);
+        window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+      });
+    }
+
+    if (shareTg) {
+      shareTg.addEventListener('click', () => {
+        const link = STATE.user ? `${SITE_URL}/?ref=${STATE.user.referralCode}` : `${SITE_URL}/`;
+        const text = encodeURIComponent(`Download HD Videos in 1080p & Earn Real Cash Rewards on PulseGrab!`);
+        window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${text}`, '_blank');
+      });
+    }
 
     // Rewards & Cashout Modal
     elements.walletPill.addEventListener('click', openRewardsModal);

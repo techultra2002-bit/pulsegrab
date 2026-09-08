@@ -2012,22 +2012,49 @@ body {
 .ref-rules-box li i.fa-circle-check { color: var(--emerald-secure); }
 .ref-rules-box li i.fa-ban { color: #ef4444; }
 
-.ref-test-bar { border-top: 1px solid rgba(255, 255, 255, 0.06); padding-top: 12px; }
+.ref-share-actions-row {
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 14px;
+}
 
-.btn-test-ref {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px dashed rgba(251, 191, 36, 0.4);
-  color: var(--gold-primary);
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 8px 12px;
+.btn-share-social {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+  font-weight: 700;
   cursor: pointer;
+  border: 1px solid transparent;
   transition: all var(--transition-fast);
 }
 
-.btn-test-ref:hover { background: rgba(251, 191, 36, 0.12); border-color: var(--gold-primary); }
+.btn-share-social.whatsapp {
+  background: #25d366;
+  color: #052e16;
+}
+
+.btn-share-social.whatsapp:hover {
+  background: #22c55e;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
+}
+
+.btn-share-social.telegram {
+  background: #0088cc;
+  color: #ffffff;
+}
+
+.btn-share-social.telegram:hover {
+  background: #0ea5e9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(0, 136, 204, 0.35);
+}
 
 /* Rewards Modal Card */
 .rewards-modal-card {
