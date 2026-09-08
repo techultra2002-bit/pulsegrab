@@ -995,11 +995,11 @@
       elements.mediaQualityMax.innerHTML = `<i class="fa-solid fa-award"></i> Up to 1080p HD`;
     }
 
-    switchFormatTab('video');
+    switchFormatTab(STATE.selectedFormatType || 'video');
     updateDownloadButtonLabel();
     elements.mediaResultArea.classList.remove('hidden');
     elements.mediaResultArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    showToast('Media stream metadata successfully extracted!', 'success');
+    showToast(`Media stream metadata extracted! Quality: ${STATE.selectedQuality}`, 'success');
   }
 
   function switchFormatTab(type) {
@@ -1009,20 +1009,44 @@
       else tab.classList.remove('active');
     });
 
+    const quickVideoBtn = document.getElementById('quickFormatVideoBtn');
+    const quickAudioBtn = document.getElementById('quickFormatAudioBtn');
+    const quickVideoQualities = document.getElementById('quickVideoQualities');
+    const quickAudioQualities = document.getElementById('quickAudioQualities');
+
+    if (quickVideoBtn && quickAudioBtn) {
+      if (type === 'video') {
+        quickVideoBtn.classList.add('active');
+        quickAudioBtn.classList.remove('active');
+      } else {
+        quickVideoBtn.classList.remove('active');
+        quickAudioBtn.classList.add('active');
+      }
+    }
+
     if (type === 'video') {
       elements.videoOptionsGrid.classList.remove('hidden');
       elements.audioOptionsGrid.classList.add('hidden');
-      selectQualityOption('1080p', 'mp4', '48.2 MB');
+      if (quickVideoQualities) quickVideoQualities.classList.remove('hidden');
+      if (quickAudioQualities) quickAudioQualities.classList.add('hidden');
+      const targetQuality = ['1080p', '720p', '480p'].includes(STATE.selectedQuality) ? STATE.selectedQuality : '1080p';
+      const sizeMap = { '1080p': '48.2 MB', '720p': '24.1 MB', '480p': '12.4 MB' };
+      selectQualityOption(targetQuality, 'mp4', sizeMap[targetQuality] || '48.2 MB');
     } else {
       elements.videoOptionsGrid.classList.add('hidden');
       elements.audioOptionsGrid.classList.remove('hidden');
-      selectQualityOption('320k', 'mp3', '8.7 MB');
+      if (quickVideoQualities) quickVideoQualities.classList.add('hidden');
+      if (quickAudioQualities) quickAudioQualities.classList.remove('hidden');
+      const targetQuality = ['320k', '256k', '128k'].includes(STATE.selectedQuality) ? STATE.selectedQuality : '320k';
+      const sizeMap = { '320k': '8.7 MB', '256k': '6.9 MB', '128k': '3.5 MB' };
+      selectQualityOption(targetQuality, 'mp3', sizeMap[targetQuality] || '8.7 MB');
     }
   }
 
   function selectQualityOption(quality, format, size) {
     STATE.selectedQuality = quality;
-    STATE.selectedSize = size;
+    if (size) STATE.selectedSize = size;
+
     elements.qualityOptionCards.forEach(card => {
       const cardQuality = card.getAttribute('data-quality');
       const radio = card.querySelector('input[type="radio"]');
@@ -1034,6 +1058,20 @@
         if (radio) radio.checked = false;
       }
     });
+
+    // Two-way sync with always-visible quick quality cards
+    document.querySelectorAll('.quick-quality-card').forEach(card => {
+      const cardQuality = card.getAttribute('data-quality');
+      const icon = card.querySelector('.qq-resolution i');
+      if (cardQuality === quality) {
+        card.classList.add('active');
+        if (icon) icon.className = 'fa-solid fa-circle-dot';
+      } else {
+        card.classList.remove('active');
+        if (icon) icon.className = 'fa-regular fa-circle';
+      }
+    });
+
     updateDownloadButtonLabel();
     updateCardRewardStatus();
   }
@@ -1385,6 +1423,25 @@
     });
 
     elements.qualityOptionCards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        const quality = e.currentTarget.getAttribute('data-quality');
+        const format = e.currentTarget.getAttribute('data-format');
+        const size = e.currentTarget.getAttribute('data-size');
+        selectQualityOption(quality, format, size);
+      });
+    });
+
+    // Quick Format Pills & Quality Cards Event Listeners
+    const quickVideoBtn = document.getElementById('quickFormatVideoBtn');
+    const quickAudioBtn = document.getElementById('quickFormatAudioBtn');
+    if (quickVideoBtn) {
+      quickVideoBtn.addEventListener('click', () => switchFormatTab('video'));
+    }
+    if (quickAudioBtn) {
+      quickAudioBtn.addEventListener('click', () => switchFormatTab('audio'));
+    }
+
+    document.querySelectorAll('.quick-quality-card').forEach(card => {
       card.addEventListener('click', (e) => {
         const quality = e.currentTarget.getAttribute('data-quality');
         const format = e.currentTarget.getAttribute('data-format');
