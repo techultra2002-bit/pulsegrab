@@ -1,28 +1,24 @@
-# PulseGrab — Files to exclude from Git repository
-# These are local-only files not needed in deployment
-
-# Node.js dependencies (not used — server.js is local only)
+# Dependencies
 node_modules/
+*/node_modules/
+website 2.0/node_modules/
 
-# Local server files (Netlify serves frontend, no Node server needed)
-server.js
-serve.ps1
-start.bat
+# Logs & Temporary Files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tmp
+*.tmp.*
 
-# OS and editor clutter
+# OS and Editor Clutter
 .DS_Store
 Thumbs.db
 desktop.ini
-*.log
-
-# Local environment secrets (never commit these!)
-.env
-.env.local
-.env.*.local
-
-# IDE configs (optional — keep if you want)
 .vscode/
 .idea/
 
-# Local Netlify folder
-.netlify
+# Environment variables
+.env
+.env.local
+.env.*.local

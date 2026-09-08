@@ -1,25 +1,16 @@
 {
-  "name": "pulsegrab-media-downloader",
-  "version": "1.0.0",
-  "description": "Ultra-secure high-speed YouTube & Instagram video and audio downloader web application",
-  "main": "server.js",
+  "name": "pulsegrab-ecosystem",
+  "version": "2.0.0",
+  "description": "High-Speed Video Downloader & Coin Reward Ecosystem 2.0",
+  "main": "website 2.0/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
+    "install-app": "npm --prefix \"website 2.0\" install",
+    "start": "node \"website 2.0/server.js\"",
+    "build": "npm --prefix \"website 2.0\" install"
   },
-  "dependencies": {
-    "express": "^4.19.2",
-    "cors": "^2.8.5",
-    "helmet": "^7.1.0",
-    "express-rate-limit": "^7.2.0"
+  "engines": {
+    "node": ">=18.0.0"
   },
-  "keywords": [
-    "youtube-downloader",
-    "instagram-downloader",
-    "mp4",
-    "mp3",
-    "media-grabber"
-  ],
   "author": "PulseGrab Team",
   "license": "MIT"
 }

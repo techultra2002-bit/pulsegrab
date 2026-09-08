@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseGrab 2.0 - High-Speed Video Downloader & Coin Reward Ecosystem</title>
+  <meta name="description" content="Download YouTube Videos, Shorts, Instagram Reels & Posts in 1080p HD or MP3 Audio. Earn coins on every download, redeem for real cash via UPI, and refer friends for bonuses.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <!-- Header / Navigation -->
+  <header class="app-header">
+    <div class="nav-container">
+      <div class="brand" id="brandHomeBtn">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <span class="brand-name">PULSE<span class="highlight">GRAB</span></span>
+          <span class="brand-tag">Ecosystem 2.0</span>
+        </div>
+      </div>
+
+      <nav class="nav-tabs">
+        <button class="nav-tab active" data-target="downloaderView" id="navDownloaderBtn">
+          <span class="tab-icon">📥</span> Downloader
+        </button>
+        <button class="nav-tab" data-target="walletView" id="navWalletBtn">
+          <span class="tab-icon">💎</span> Rewards Wallet
+        </button>
+        <button class="nav-tab" data-target="referralView" id="navReferralBtn">
+          <span class="tab-icon">🚀</span> Refer & Earn
+        </button>
+        <button class="nav-tab admin-only" data-target="adminView" id="navAdminBtn" style="display:none;">
+          <span class="tab-icon">🛡️</span> Admin Center
+        </button>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Coin Wallet Pill -->
+        <div class="coin-pill" id="coinPill" title="Your current available coin balance">
+          <span class="coin-icon">🪙</span>
+          <span class="coin-amount" id="navCoinCount">0</span>
+          <span class="coin-label">Coins</span>
+        </div>
+
+        <!-- User Profile / Auth State -->
+        <div class="user-auth-area" id="userAuthArea">
+          <!-- Populated dynamically: Sign In Button or Profile Pill -->
+          <button class="btn btn-primary btn-sm" id="openAuthModalBtn">
+            <svg class="icon-google" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            Sign In with Google
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ADSENSE PLACEMENT 1: Top Leaderboard Banner (728x90) -->
+  <div class="adsense-banner-container">
+    <div class="adsense-slot top-banner">
+      <div class="ad-label">SPONSORED ADVERTISEMENT</div>
+      <div class="ad-placeholder-content">
+        <span class="ad-badge">Google AdSense</span>
+        <p class="ad-headline">Ultra-Fast Cloud Hosting & Unlimited Bandwidth VPS — 70% Off Today</p>
+        <span class="ad-cta">Learn More →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Multi-View Shell -->
+  <main class="main-layout">
+    
+    <!-- LEFT / CENTER CONTENT AREA -->
+    <div class="content-primary">
+
+      <!-- ============================================== -->
+      <!-- VIEW 1: DOWNLOADER STUDIO -->
+      <!-- ============================================== -->
+      <section class="view-panel active" id="downloaderView">
+        
+        <!-- Hero Section -->
+        <div class="hero-box">
+          <div class="hero-badge">⚡ INSTANT HIGH-SPEED SCRAPER</div>
+          <h1 class="hero-title">Download YouTube & Instagram Media. <span class="gradient-text">Earn Real Cash.</span></h1>
+          <p class="hero-subtitle">
+            Paste any YouTube Video, Short, or Instagram Reel. Download in crystal-clear 1080p or 720p HD to collect 
+            <strong class="highlight-coin">+10 Coins per download</strong>. Daily cap resets at 4:00 AM IST!
+          </p>
+
+          <!-- Universal Input Box -->
+          <div class="search-wrapper">
+            <div class="search-icon">🔗</div>
+            <input 
+              type="text" 
+              id="mediaUrlInput" 
+              class="search-input" 
+              placeholder="Paste YouTube or Instagram link here (e.g. https://www.youtube.com/watch?v=... or /reel/...)"
+              autocomplete="off"
+            />
+            <button class="btn btn-action" id="resolveMediaBtn">
+              <span class="btn-text">Fetch Media</span>
+              <span class="btn-loader" style="display:none;">⏳</span>
+            </button>
+          </div>
+
+          <!-- Quick Sample Shortcuts for Instant One-Click Testing -->
+          <div class="quick-samples">
+            <span class="sample-label">Try sample:</span>
+            <button class="sample-chip" data-url="https://www.youtube.com/watch?v=dQw4w9WgXcQ">YouTube 4K Video</button>
+            <button class="sample-chip" data-url="https://www.youtube.com/shorts/sampleShort1">YouTube Short</button>
+            <button class="sample-chip" data-url="https://www.instagram.com/reel/C8xyz123abc/">Instagram Reel</button>
+          </div>
+        </div>
+
+        <!-- Daily Reward Meter & 4AM IST Reset Info -->
+        <div class="daily-meter-card">
+          <div class="meter-header">
+            <div class="meter-title-wrap">
+              <span class="meter-icon">🎯</span>
+              <div>
+                <h3 class="meter-heading">Daily Download Reward Meter</h3>
+                <p class="meter-sub">Earn exactly 10 coins per 720p/1080p download (Max 250 coins / 25 downloads daily)</p>
+              </div>
+            </div>
+            <div class="reset-badge" id="nextResetBadge" title="Automatic daily reset occurs at 4:00 AM Indian Standard Time">
+              <span class="clock-icon">⏰</span> Resets: <span id="resetTimerDisplay">4:00 AM IST</span>
+            </div>
+          </div>
+
+          <div class="meter-bar-track">
+            <div class="meter-bar-fill" id="dailyMeterFill" style="width: 0%;"></div>
+          </div>
+
+          <div class="meter-stats-row">
+            <span class="meter-stat">Today's Downloads: <strong id="todayDlCount">0</strong> / 25 counted</span>
+            <span class="meter-stat">Coins Earned: <strong id="todayCoinsCount">0</strong> / 250 Coins</span>
+            <span class="meter-status-pill" id="capStatusPill">Rewards Active</span>
+          </div>
+        </div>
+
+        <!-- Media Resolution Preview Card (Hidden until link fetched) -->
+        <div class="media-result-card" id="mediaResultCard" style="display: none;">
+          <div class="media-preview-header">
+            <div class="media-thumb-wrap">
+              <img src="" alt="Thumbnail" id="mediaThumbImg" class="media-thumb">
+              <span class="platform-tag" id="mediaPlatformTag">YOUTUBE</span>
+              <span class="duration-tag" id="mediaDurationTag">3:45</span>
+            </div>
+            <div class="media-meta-details">
+              <h2 class="media-title" id="mediaTitleText">Sample Video Title</h2>
+              <p class="media-author" id="mediaAuthorText">By Creator Studio</p>
+              <div class="verified-safe-tag">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                  <polyline points="9 12 11 14 15 10"/>
+                </svg>
+                Direct Stream Pipe Verified
+              </div>
+            </div>
+          </div>
+
+          <!-- Quality Stream Table / Selector -->
+          <div class="streams-section">
+            <h3 class="streams-heading">Select Download Resolution:</h3>
+            <div class="streams-grid" id="streamsGrid">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+
+        <!-- ADSENSE PLACEMENT 2: In-Content Leaderboard Banner -->
+        <div class="adsense-slot in-content-banner">
+          <div class="ad-label">SPONSORED ADVERTISEMENT</div>
+          <div class="ad-placeholder-content">
+            <span class="ad-badge">Google AdSense</span>
+            <p class="ad-headline">Automate Your Social Media Growth with Smart AI Schedulers — 14-Day Free Trial</p>
+            <span class="ad-cta">Try For Free →</span>
+          </div>
+        </div>
+
+        <!-- Rewarded Ad Boost Card -->
+        <div class="rewarded-ad-card">
+          <div class="rewarded-ad-content">
+            <span class="boost-icon">🎁</span>
+            <div>
+              <h4 class="boost-title">Instant Coin Boost (+25 Coins)</h4>
+              <p class="boost-desc">View a short 5-second sponsor showcase to immediately claim <strong>+25 bonus coins</strong> directly into your wallet.</p>
+            </div>
+          </div>
+          <button class="btn btn-gold" id="openRewardedAdBtn">
+            <span>▶</span> Watch Sponsor Ad (+25 Coins)
+          </button>
+        </div>
+
+        <!-- Reward System Rule Card -->
+        <div class="info-rules-card">
+          <h3 class="info-title">💡 How Download Rewards Work</h3>
+          <div class="rules-grid">
+            <div class="rule-item">
+              <div class="rule-number">10</div>
+              <div class="rule-desc">
+                <strong>Coins for HD (720p / 1080p)</strong>
+                <p>Every completed High Definition download credits 10 coins directly to your wallet.</p>
+              </div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-number">0</div>
+              <div class="rule-desc">
+                <strong>Coins for 480p / Audio</strong>
+                <p>480p SD or MP3 Audio downloads are free and unlimited, but yield 0 coins.</p>
+              </div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-number">250</div>
+              <div class="rule-desc">
+                <strong>Daily Earning Ceiling</strong>
+                <p>Max 250 coins (25 downloads) per day. Downloads 26+ complete successfully without coins.</p>
+              </div>
+            </div>
+            <div class="rule-item">
+              <div class="rule-number">4 AM</div>
+              <div class="rule-desc">
+                <strong>Global IST Reset</strong>
+                <p>All daily counters automatically reset every morning at 4:00 AM Indian Standard Time.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 2: REWARDS WALLET & UPI REDEMPTION -->
+      <!-- ============================================== -->
+      <section class="view-panel" id="walletView" style="display:none;">
+        
+        <div class="wallet-hero-grid">
+          <!-- Main Balance Card -->
+          <div class="balance-card">
+            <span class="card-label">AVAILABLE WALLET BALANCE</span>
+            <div class="balance-value-row">
+              <span class="balance-coin-symbol">🪙</span>
+              <span class="balance-number" id="walletBalanceNum">0</span>
+              <span class="balance-unit">Coins</span>
+            </div>
+            <div class="balance-meta-row">
+              <span>Lifetime Earned: <strong id="lifetimeEarnedNum">0</strong> Coins</span>
+              <span class="tier-chip" id="userTierChip">Standard Tier</span>
+            </div>
+          </div>
+
+          <!-- Payout Unlock Gate Card -->
+          <div class="unlock-gate-card" id="unlockGateCard">
+            <div class="gate-header">
+              <span class="gate-icon" id="gateIcon">🔒</span>
+              <div>
+                <h4 class="gate-title" id="gateTitle">Cash Payouts: LOCKED</h4>
+                <p class="gate-desc" id="gateDesc">Requires 5,000+ coins in wallet. Unlocks for a one-time 1,000 coin deduction.</p>
+              </div>
+            </div>
+            <div class="gate-actions">
+              <button class="btn btn-unlock" id="unlockPayoutBtn">
+                Unlock Cash Redemption (1,000 Coins)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPI ID Binding Section -->
+        <div class="upi-binding-card">
+          <div class="upi-header">
+            <div class="upi-title-wrap">
+              <span class="upi-icon">💳</span>
+              <div>
+                <h3 class="card-heading">Locked UPI Payment Address</h3>
+                <p class="card-sub">Redemption transfers are sent directly to this address via IMPS / UPI.</p>
+              </div>
+            </div>
+            <span class="status-tag" id="upiStatusTag">Not Bound</span>
+          </div>
+
+          <div class="upi-form-row">
+            <div class="input-with-badge">
+              <input 
+                type="text" 
+                id="upiAddressInput" 
+                class="form-input" 
+                placeholder="Enter UPI ID (e.g. yourname@okhdfcbank or 9876543210@paytm)" 
+              />
+              <span class="input-fee-badge" id="upiFeeBadge">Fee: 500 Coins (1st time)</span>
+            </div>
+            <button class="btn btn-primary" id="saveUpiBtn">
+              Lock UPI Address
+            </button>
+          </div>
+          <p class="input-hint">Note: Initial lock costs 500 coins. Modifying a bound UPI ID afterwards costs 250 coins.</p>
+        </div>
+
+        <!-- ADSENSE PLACEMENT 3: In-Content Wallet Banner -->
+        <div class="adsense-slot in-content-banner">
+          <div class="ad-label">SPONSORED ADVERTISEMENT</div>
+          <div class="ad-placeholder-content">
+            <span class="ad-badge">Google AdSense</span>
+            <p class="ad-headline">Get a Lifetime Free Platinum Metal Credit Card — Zero Annual Fee & 5% Cashback</p>
+            <span class="ad-cta">Apply in 2 Mins →</span>
+          </div>
+        </div>
+
+        <!-- Redemption Matrix (Tiers) -->
+        <div class="redemption-section">
+          <h3 class="section-heading">Redeem Coins for Direct UPI Cash</h3>
+          <p class="section-sub">Choose a reward tier below. Approved payouts are deposited within 24 hours.</p>
+
+          <div class="tiers-grid">
+            
+            <!-- Tier 1: 12k -> 100 Rs -->
+            <div class="tier-card" data-tier="tier_1">
+              <div class="tier-badge">TIER 1</div>
+              <div class="tier-cash">₹100 <span class="cash-currency">INR</span></div>
+              <div class="tier-cost">
+                <span class="coin-tiny">🪙</span> 12,000 Coins
+              </div>
+              <ul class="tier-perks">
+                <li>✓ Direct UPI Transfer</li>
+                <li>✓ Verified Bank Receipt</li>
+              </ul>
+              <button class="btn btn-redeem" data-tier="tier_1">Redeem ₹100</button>
+            </div>
+
+            <!-- Tier 2: 18k -> 200 Rs -->
+            <div class="tier-card featured" data-tier="tier_2">
+              <div class="tier-badge popular">MOST POPULAR</div>
+              <div class="tier-cash">₹200 <span class="cash-currency">INR</span></div>
+              <div class="tier-cost">
+                <span class="coin-tiny">🪙</span> 18,000 Coins
+              </div>
+              <ul class="tier-perks">
+                <li>✓ High Value Conversion</li>
+                <li>✓ Direct UPI Transfer</li>
+              </ul>
+              <button class="btn btn-redeem" data-tier="tier_2">Redeem ₹200</button>
+            </div>
+
+            <!-- Tier 3: 20k -> 250 Rs -->
+            <div class="tier-card" data-tier="tier_3">
+              <div class="tier-badge">GOLD TIER</div>
+              <div class="tier-cash">₹250 <span class="cash-currency">INR</span></div>
+              <div class="tier-cost">
+                <span class="coin-tiny">🪙</span> 20,000 Coins
+              </div>
+              <ul class="tier-perks">
+                <li>✓ Executive Payout Speed</li>
+                <li>✓ Direct UPI Transfer</li>
+              </ul>
+              <button class="btn btn-redeem" data-tier="tier_3">Redeem ₹250</button>
+            </div>
+
+            <!-- Tier 4: 50k -> 1,000 Rs -->
+            <div class="tier-card mega" data-tier="tier_4">
+              <div class="tier-badge mega-badge">🔥 MEGA REWARD</div>
+              <div class="tier-cash">₹1,000 <span class="cash-currency">INR</span></div>
+              <div class="tier-cost">
+                <span class="coin-tiny">🪙</span> 50,000 Coins
+              </div>
+              <ul class="tier-perks">
+                <li>✓ Maximum Cash Value</li>
+                <li>✓ VIP Processing Queue</li>
+              </ul>
+              <button class="btn btn-redeem mega-btn" data-tier="tier_4">Redeem ₹1,000</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Redemption Transaction History -->
+        <div class="history-section">
+          <h3 class="section-heading">Your Redemption History</h3>
+          <div class="table-responsive">
+            <table class="data-table" id="userPayoutsTable">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>Date & Time</th>
+                  <th>Coins Deducted</th>
+                  <th>Cash Amount</th>
+                  <th>UPI Destination</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="userPayoutsTbody">
+                <tr>
+                  <td colspan="6" class="text-center empty-cell">No redemptions requested yet.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 3: REFERRAL PROGRAM HUB -->
+      <!-- ============================================== -->
+      <section class="view-panel" id="referralView" style="display:none;">
+        
+        <div class="referral-hero">
+          <div class="referral-badge">🚀 INFINITE EARNING ENGINE</div>
+          <h2 class="view-title">Invite Friends & <span class="gradient-text">Earn 250 Coins</span> Per Friend</h2>
+          <p class="view-subtitle">
+            Share your exclusive link. Your friend receives an instant <strong>100 Coins starter bonus</strong> upon registration. 
+            Once they complete 3 high-definition downloads, you instantly receive <strong>250 Coins</strong>!
+          </p>
+
+          <!-- Referral Link Box -->
+          <div class="referral-link-box">
+            <input type="text" id="referralLinkInput" class="referral-input" readonly value="https://pulsegrab.com?ref=LOADING" />
+            <button class="btn btn-primary" id="copyRefLinkBtn">📋 Copy Link</button>
+            <a href="#" target="_blank" class="btn btn-whatsapp" id="shareWaBtn">💬 WhatsApp</a>
+            <a href="#" target="_blank" class="btn btn-telegram" id="shareTgBtn">✈️ Telegram</a>
+          </div>
+        </div>
+
+        <!-- Referral Stats Grid -->
+        <div class="stats-overview-grid">
+          <div class="stat-card">
+            <span class="stat-icon">👥</span>
+            <div class="stat-num" id="statTotalRefs">0</div>
+            <div class="stat-desc">Total Friends Registered</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">✅</span>
+            <div class="stat-num" id="statCompletedRefs">0</div>
+            <div class="stat-desc">Completed 3/3 Milestone (+250 credited)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">⏳</span>
+            <div class="stat-num" id="statPendingRefs">0</div>
+            <div class="stat-desc">In Progress (0/3 to 2/3 downloads)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">📈</span>
+            <div class="stat-num"><span id="statRefCoinsToday">0</span> / 1,000</div>
+            <div class="stat-desc">Today's Referral Coins (1k daily cap)</div>
+          </div>
+        </div>
+
+        <!-- Referral Tree / Referred Friends Table -->
+        <div class="referrals-table-card">
+          <h3 class="card-heading">Your Referred Network</h3>
+          <div class="table-responsive">
+            <table class="data-table" id="referredFriendsTable">
+              <thead>
+                <tr>
+                  <th>Referred User</th>
+                  <th>Registered On</th>
+                  <th>HQ Downloads (720p+)</th>
+                  <th>Milestone Status</th>
+                  <th>Bonus Credited</th>
+                </tr>
+              </thead>
+              <tbody id="referredFriendsTbody">
+                <tr>
+                  <td colspan="5" class="text-center empty-cell">No friends referred yet. Share your link to start earning!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================== -->
+      <!-- VIEW 4: ADMIN REWARD & PAYOUT CONTROL CENTER -->
+      <!-- ============================================== -->
+      <section class="view-panel" id="adminView" style="display:none;">
+        
+        <!-- 2FA Gate (Displayed if not yet verified in active session) -->
+        <div class="admin-2fa-gate" id="admin2faGate">
+          <div class="gate-modal-card">
+            <div class="shield-badge">🛡️ RESTRICTED ADMIN CLEARANCE</div>
+            <h2 class="modal-title">Google Authenticator 2FA Required</h2>
+            <p class="modal-subtitle">To safeguard payout operations, please enter the 6-digit TOTP security code from your Google Authenticator app.</p>
+            
+            <div class="totp-setup-box" id="totpSetupBox">
+              <div class="qr-container">
+                <img id="adminQrImage" src="" alt="Google Authenticator QR" />
+              </div>
+              <div class="key-manual">
+                <span>Secret Key: <strong id="adminSecretKeyDisplay">---</strong></span>
+              </div>
+            </div>
+
+            <div class="totp-input-row">
+              <input 
+                type="text" 
+                id="admin2faInput" 
+                class="totp-field" 
+                placeholder="000000" 
+                maxlength="6" 
+                autocomplete="off" 
+              />
+              <button class="btn btn-primary" id="verify2faBtn">Verify 2FA Token</button>
+            </div>
+            <p class="gate-tip">Tip: Default secret `JBSWY3DPEHPK3PXP` is pre-configured for instant testing.</p>
+          </div>
+        </div>
+
+        <!-- Authenticated Admin Workspace -->
+        <div class="admin-workspace" id="adminWorkspace" style="display:none;">
+          
+          <div class="admin-topbar">
+            <div>
+              <h2 class="admin-page-title">Reward & Payout Control Center</h2>
+              <p class="admin-page-sub">Auditing, Fraud Monitoring & UPI Liquidity Settlement</p>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="refreshAdminBtn">🔄 Refresh Data</button>
+          </div>
+
+          <!-- Admin KPI Metrics -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <span class="kpi-title">TOTAL REGISTERED USERS</span>
+              <div class="kpi-val"><span id="kpiTotalUsers">0</span></div>
+              <span class="kpi-meta"><strong id="kpiActiveToday">0</strong> Active in last 24h</span>
+            </div>
+            <div class="kpi-card highlight-gold">
+              <span class="kpi-title">COINS CIRCULATING</span>
+              <div class="kpi-val"><span id="kpiCirculatingCoins">0</span> 🪙</div>
+              <span class="kpi-meta">Across all user accounts</span>
+            </div>
+            <div class="kpi-card highlight-cyan">
+              <span class="kpi-title">PENDING PAYOUT QUEUE</span>
+              <div class="kpi-val"><span id="kpiPendingCount">0</span> reqs</div>
+              <span class="kpi-meta">Total: ₹<strong id="kpiPendingInr">0</strong> INR</span>
+            </div>
+            <div class="kpi-card highlight-green">
+              <span class="kpi-title">TOTAL COMPLETED PAYOUTS</span>
+              <div class="kpi-val">₹<span id="kpiCompletedInr">0</span></div>
+              <span class="kpi-meta"><strong id="kpiCompletedCount">0</strong> requests settled</span>
+            </div>
+          </div>
+
+          <!-- Section A: Payout Management Queue -->
+          <div class="admin-section-box">
+            <div class="section-title-wrap">
+              <h3 class="section-heading">Pending Payout Management Queue</h3>
+              <span class="badge badge-warning">Fraud Detection Engine Active</span>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table" id="adminPayoutsTable">
+                <thead>
+                  <tr>
+                    <th>User & Google Profile</th>
+                    <th>Wallet Stats</th>
+                    <th>Requested Tier</th>
+                    <th>Locked UPI ID</th>
+                    <th>Fraud Risk Flags</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminPayoutsTbody">
+                  <!-- Rendered dynamically with Approve, Reject, Ban -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Section B: User Ledger Audit Tool -->
+          <div class="admin-section-box">
+            <h3 class="section-heading">User Ledger Audit Tool</h3>
+            <p class="section-sub">Inspect individual user download logs (last 100) and referral network tree.</p>
+
+            <div class="search-wrapper user-audit-search">
+              <input 
+                type="text" 
+                id="auditUserQueryInput" 
+                class="search-input" 
+                placeholder="Enter User Email, User ID, or Referral Code (e.g. alex.kumar@gmail.com or ALEX777)" 
+              />
+              <button class="btn btn-primary" id="auditUserSearchBtn">Audit User Ledger</button>
+            </div>
+
+            <!-- Audit Results Display -->
+            <div id="auditUserResults" style="display:none; margin-top: 1.5rem;">
+              <div class="audit-profile-card" id="auditProfileCard">
+                <!-- User basic profile & stats -->
+              </div>
+
+              <div class="audit-tabs">
+                <button class="audit-tab-btn active" data-tab="auditDownloads">Download History (Last 100)</button>
+                <button class="audit-tab-btn" data-tab="auditReferrals">Referral Graph Tree</button>
+              </div>
+
+              <div class="audit-tab-content active" id="auditDownloads">
+                <div class="table-responsive">
+                  <table class="data-table" id="auditDownloadsTable">
+                    <thead>
+                      <tr>
+                        <th>Timestamp</th>
+                        <th>Video Source URL</th>
+                        <th>Title</th>
+                        <th>Quality</th>
+                        <th>Coins Credited</th>
+                      </tr>
+                    </thead>
+                    <tbody id="auditDownloadsTbody"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="audit-tab-content" id="auditReferrals" style="display:none;">
+                <div id="auditReferralTree"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section C: System Audit Logs -->
+          <div class="admin-section-box">
+            <h3 class="section-heading">Security Audit Log Feed</h3>
+            <div class="table-responsive">
+              <table class="data-table" id="adminAuditLogsTable">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Admin Email</th>
+                    <th>Action</th>
+                    <th>IP Address</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="adminAuditLogsTbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT SIDEBAR (ADSENSE & QUICK PROFILE WIDGET) -->
+    <aside class="content-sidebar">
+      
+      <!-- ADSENSE PLACEMENT 2: Sidebar Container (300x250 or 300x600) -->
+      <div class="adsense-slot sidebar-ad">
+        <div class="ad-label">SPONSORED ADVERTISEMENT</div>
+        <div class="ad-placeholder-content vertical">
+          <span class="ad-badge">Google AdSense</span>
+          <div class="ad-img-mock">🌐</div>
+          <p class="ad-headline">Trade Global Crypto & Stocks with Zero Brokerage</p>
+          <span class="ad-cta">Open Free Account →</span>
+        </div>
+      </div>
+
+      <!-- Quick Tester Switcher Card -->
+      <div class="sidebar-card quick-tester-card">
+        <h4 class="sidebar-title">⚡ Instant Testing Switcher</h4>
+        <p class="sidebar-desc">Switch accounts in 1-click to test complete workflows without Google API setup:</p>
+        <div class="tester-btn-group">
+          <button class="btn btn-tester" data-switch="admin">
+            <span>🛡️ Admin Account</span>
+            <small>admin@pulsegrab.com</small>
+          </button>
+          <button class="btn btn-tester" data-switch="alex">
+            <span>👤 Regular User (Alex)</span>
+            <small>13.5k coins | UPI bound</small>
+          </button>
+          <button class="btn btn-tester" data-switch="fresh">
+            <span>✨ New Referred User</span>
+            <small>Referred by Alex | +100 Coins</small>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Referral Share Widget -->
+      <div class="sidebar-card">
+        <h4 class="sidebar-title">🎁 Starter Bonus Alert</h4>
+        <p class="sidebar-desc">Send your link to friends. When they register, they get <strong>100 Coins</strong> and you get <strong>250 Coins</strong> after their 3rd HD download.</p>
+        <div class="sidebar-ref-code">
+          <span>Your Code: <strong id="sidebarRefCode">---</strong></span>
+          <button class="btn-copy-mini" id="sidebarCopyRefBtn">Copy</button>
+        </div>
+      </div>
+
+      <!-- ADSENSE PLACEMENT 4: Sidebar Sticky Skyscraper (300x600) -->
+      <div class="adsense-slot sidebar-skyscraper-ad">
+        <div class="ad-label">SPONSORED ADVERTISEMENT</div>
+        <div class="ad-placeholder-content vertical skyscraper">
+          <span class="ad-badge">Google AdSense</span>
+          <div class="ad-img-mock">⚡</div>
+          <h4 class="ad-headline-large">Deploy NVMe Cloud Instances in Under 30 Seconds</h4>
+          <p class="ad-subtext">Dedicated Intel Xeon & AMD EPYC servers with 10Gbps unmetered uplinks and DDoS protection included.</p>
+          <ul class="ad-feature-list">
+            <li>✓ 99.99% Guaranteed SLA</li>
+            <li>✓ 24/7 Global DevOps Support</li>
+            <li>✓ Instant One-Click WordPress & Docker</li>
+          </ul>
+          <span class="ad-cta btn btn-primary btn-sm">Get $100 Free Cloud Credits →</span>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- ADSENSE PLACEMENT 5: Sticky Bottom Anchor Banner (728x90 / responsive) -->
+  <div class="adsense-sticky-bottom" id="stickyBottomAd">
+    <button class="sticky-ad-close" id="closeStickyAdBtn" title="Close Advertisement">✕</button>
+    <div class="sticky-ad-inner">
+      <div class="sticky-ad-tag">
+        <span class="ad-badge">SPONSORED</span>
+        <span class="live-dot"></span>
+      </div>
+      <p class="sticky-ad-text">Earn high-yield returns on crypto & gold staking — Zero maintenance fee & instant withdrawals!</p>
+      <a href="https://google.com" target="_blank" class="btn btn-sm btn-primary sticky-ad-btn">Claim $50 Bonus →</a>
+    </div>
+  </div>
+
+  <!-- FLOATING SPONSOR CORNER DEAL PILL -->
+  <div class="floating-deal-pill" id="floatingDealPill">
+    <span class="pill-sparkle">🔥</span>
+    <span class="pill-text">Special Sponsor Deal: 80% Off Hosting</span>
+    <button class="deal-open-btn" id="openExitDealBtn">View Deal</button>
+  </div>
+
+  <!-- REWARDED SPONSOR VIDEO AD MODAL -->
+  <div class="modal-overlay" id="rewardedAdModal" style="display:none;">
+    <div class="modal-card rewarded-ad-modal-card">
+      <button class="modal-close-btn" id="closeRewardedAdModalBtn">✕</button>
+      <div class="rewarded-ad-header">
+        <span class="ad-badge">SPONSORED SHOWCASE</span>
+        <span class="countdown-badge" id="rewardedTimerBadge">Reward unlocks in 5s...</span>
+      </div>
+      <div class="rewarded-showcase-box">
+        <div class="mock-video-player">
+          <div class="sponsor-play-icon">▶</div>
+          <h3>Next-Gen Cloud GPUs for AI Developers</h3>
+          <p>Deploy Deep Learning clusters in 60 seconds with up to 80% cost savings compared to hyperscalers.</p>
+          <button class="btn btn-primary btn-sm" onclick="window.open('https://google.com', '_blank')">Explore Sponsor Cloud →</button>
+        </div>
+      </div>
+      <div class="rewarded-ad-footer">
+        <p class="reward-status-msg" id="rewardedAdStatusMsg">Watch the 5-second showcase to receive your +25 Coins reward.</p>
+        <button class="btn btn-gold btn-block" id="claimRewardedCoinsBtn" disabled>Claim +25 Coins</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SPECIAL SPONSOR EXIT POPUP MODAL -->
+  <div class="modal-overlay" id="exitDealModal" style="display:none;">
+    <div class="modal-card exit-deal-card">
+      <button class="modal-close-btn" id="closeExitDealModalBtn">✕</button>
+      <div class="deal-tag">EXCLUSIVE LIMITED-TIME OFFER</div>
+      <h2 class="modal-title">Before You Go: Claim 80% Off Cloud Hosting</h2>
+      <p class="modal-subtitle">Special promo exclusively for PulseGrab users: Free domain, SSL, and unmetered bandwidth.</p>
+      <div class="deal-promo-box">
+        <span class="promo-code">PULSE2026</span>
+        <button class="btn btn-sm btn-primary" id="copyPromoCodeBtn">Copy Code</button>
+      </div>
+      <button class="btn btn-primary btn-block" onclick="window.open('https://google.com', '_blank');">Claim Sponsor Offer Now →</button>
+    </div>
+  </div>
+
+  <!-- ADSENSE PLACEMENT 3: Post-Download Interstitial Modal -->
+  <div class="modal-overlay" id="interstitialModal" style="display:none;">
+    <div class="modal-card interstitial-card">
+      <div class="interstitial-header">
+        <span class="ad-badge">SPONSORED ADVERTISEMENT</span>
+        <span class="countdown-badge" id="adCountdownText">Closing in 3s...</span>
+      </div>
+      <div class="interstitial-body">
+        <div class="interstitial-ad-box">
+          <span class="interstitial-icon">🚀</span>
+          <h3>Supercharge Your Productivity with AI Workspaces</h3>
+          <p>Automate repetitive workflows, summarize content in seconds, and scale your output seamlessly.</p>
+          <button class="btn btn-primary" onclick="window.open('https://google.com', '_blank')">Visit Sponsor Website →</button>
+        </div>
+      </div>
+      <div class="interstitial-footer">
+        <p class="interstitial-note">Your file download has started in the background. Thank you for supporting our platform.</p>
+        <button class="btn btn-secondary btn-sm" id="closeInterstitialBtn">Skip & Close Ad</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Sign-In & Registration Modal -->
+  <div class="modal-overlay" id="authModal" style="display:none;">
+    <div class="modal-card auth-card">
+      <button class="modal-close-btn" id="closeAuthModalBtn">✕</button>
+      <div class="auth-header">
+        <div class="auth-logo">🪙</div>
+        <h2 class="modal-title">Sign in with Google</h2>
+        <p class="modal-subtitle">Access your coin ledger, download high-definition media, and withdraw rewards directly to UPI.</p>
+      </div>
+
+      <!-- Official Google Sign-In Button Container -->
+      <div id="googleButtonContainer" class="google-btn-slot"></div>
+
+      <div class="auth-divider">
+        <span>OR QUICK TEST LOGIN</span>
+      </div>
+
+      <div class="custom-login-form">
+        <input type="email" id="customEmailInput" class="form-input" placeholder="Enter any Google email (e.g. user@gmail.com)" />
+        <input type="text" id="customRefInput" class="form-input" placeholder="Referral Code (optional for +100 bonus)" />
+        <button class="btn btn-primary btn-block" id="customLoginBtn">Continue with Google Account</button>
+      </div>
+
+      <p class="auth-legal-note">
+        By signing in, you agree to our <a href="#" id="openTermsLinkFromAuth">Terms and Conditions of Service</a>.
+      </p>
+    </div>
+  </div>
+
+  <!-- Payout Reject / Refund Modal (For Admins) -->
+  <div class="modal-overlay" id="rejectModal" style="display:none;">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="closeRejectModalBtn">✕</button>
+      <h3 class="modal-title">Reject & Refund Payout Request</h3>
+      <p class="modal-subtitle">Deducted coins will be immediately returned to the user's wallet. An automated explanation email will be logged.</p>
+      
+      <div class="reject-form">
+        <label class="form-label">Select or Type Reason:</label>
+        <select id="rejectReasonSelect" class="form-input">
+          <option value="UPI ID failed bank verification / unreachable VPA">UPI ID failed bank verification / unreachable VPA</option>
+          <option value="Self-referral fraud detection flag triggered">Self-referral fraud detection flag triggered</option>
+          <option value="Automated bot download speed threshold violated (<5 min cap)">Automated bot download speed threshold violated (&lt;5 min cap)</option>
+          <option value="Custom">Custom Explanation...</option>
+        </select>
+        <textarea id="rejectCustomReason" class="form-input" placeholder="Enter specific explanation for user..." style="display:none; margin-top:0.5rem;"></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="cancelRejectBtn">Cancel</button>
+        <button class="btn btn-danger" id="confirmRejectBtn">Confirm Rejection & Refund</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terms and Conditions Modal (Full Legal Text September 2026) -->
+  <div class="modal-overlay" id="termsModal" style="display:none;">
+    <div class="modal-card terms-card">
+      <button class="modal-close-btn" id="closeTermsModalBtn">✕</button>
+      <h2 class="modal-title">Terms and Conditions of Service</h2>
+      <p class="terms-date"><strong>Last Updated: September 2026</strong></p>
+
+      <div class="terms-content">
+        <p>Welcome to our platform. By accessing or using our website, you agree to comply with and be bound by these Terms and Conditions. If you do not agree, please do not use our services.</p>
+
+        <h3>1. Services Provided & Content Disclaimer</h3>
+        <ul>
+          <li><strong>Tool Nature:</strong> Our website operates exclusively as a technical utility to facilitate the streaming and caching of public media files.</li>
+          <li><strong>User Responsibility:</strong> Users assume full legal responsibility for the URLs they submit. We do not host, store, or pre-screen any media files on our servers. You must ensure you possess the legal right or explicit permission from the copyright owner before downloading any media.</li>
+          <li><strong>Intellectual Property:</strong> YouTube, Instagram, and related trademarks belong to their respective owners. This platform is completely unaffiliated with Google LLC or Meta Platforms Inc.</li>
+        </ul>
+
+        <h3>2. Reward Program Rules & Coin Economy</h3>
+        <ul>
+          <li><strong>Earning Thresholds:</strong> Virtual "Coins" are granted solely for successful downloads at or above 720p/1080p resolution, subject to a daily ceiling of 250 coins. Referral bonuses are exclusively credited once a referred party successfully registers via Google OAuth and finishes 3 valid high-quality downloads.</li>
+          <li><strong>Daily Reset:</strong> All personal daily download caps reset at exactly 4:00 AM IST.</li>
+          <li><strong>Redemption Requirements:</strong> Initiating a cash withdrawal requires a baseline balance of 5,000 coins. A one-time conversion deduction of 1,000 coins applies to unlock the system, alongside standard network binding and correction fees for UPI credentials (500 and 250 coins respectively).</li>
+          <li><strong>No Cash Value:</strong> Virtual coins hold no intrinsic monetary, legal, or property value outside of our internal promotional ledger until an authorized cash transfer is approved and completed by the system administration.</li>
+        </ul>
+
+        <h3>3. Strict Anti-Fraud, Bot, & Abuse Policies</h3>
+        <p>We maintain a zero-tolerance policy against system manipulation. We reserve the absolute right to freeze, audit, and permanently ban accounts—forfeiting all accumulated points—without notice if we discover:</p>
+        <ul>
+          <li>The use of headless browsers, emulation software, macros, auto-clickers, automated download scripts, or API injection tools.</li>
+          <li>Creation of multiple accounts by a single individual to harvest referral points (self-referral fraud).</li>
+          <li>Exploitation of platform glitches or layout bugs to bypass daily caps or coin accumulation limits.</li>
+        </ul>
+
+        <h3>4. Limitation of Liability</h3>
+        <p>We strive for continuous platform availability. However, we offer this website on an "as-is" and "as-available" basis. We are not legally liable for missing coin tallies, failed cash settlements due to incorrect UPI address entries, server downtime, or the unexpected termination of the reward incentive ecosystem.</p>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="acceptTermsBtn">I Understand & Accept Terms</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-left">
+        <span>© 2026 PulseGrab Ecosystem. High-Performance Utility & Rewards.</span>
+      </div>
+      <div class="footer-links">
+        <a href="#" id="footerTermsLink">Terms and Conditions of Service</a>
+        <a href="#" id="footerPrivacyLink">Privacy Policy</a>
+        <a href="#" id="footerContactLink">Support & Inquiries</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

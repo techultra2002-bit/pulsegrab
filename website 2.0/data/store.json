@@ -1,0 +1,337 @@
+{
+  "users": [
+    {
+      "id": "usr_admin_default",
+      "googleId": "google_admin_1001",
+      "email": "admin@pulsegrab.com",
+      "name": "PulseGrab Admin",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
+      "coins": 5000,
+      "lifetimeEarned": 35000,
+      "totalDownloads": 120,
+      "is_admin": true,
+      "twoFactorSecret": "JBSWY3DPEHPK3PXP",
+      "twoFactorEnabled": true,
+      "payoutUnlocked": true,
+      "lockedUpi": "admin@okhdfcbank",
+      "upiHistory": [
+        "admin@okhdfcbank"
+      ],
+      "referralCode": "ADMIN01",
+      "referredBy": null,
+      "isBanned": false,
+      "registrationIp": "127.0.0.1",
+      "createdAt": "2026-08-09T14:15:45.914Z",
+      "lastLoginAt": "2026-09-08T14:15:45.921Z"
+    },
+    {
+      "id": "usr_demo_user1",
+      "googleId": "google_user_2001",
+      "email": "alex.kumar@gmail.com",
+      "name": "Alex Kumar",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80",
+      "coins": 1785,
+      "lifetimeEarned": 16285,
+      "totalDownloads": 44,
+      "is_admin": false,
+      "twoFactorSecret": null,
+      "twoFactorEnabled": false,
+      "payoutUnlocked": true,
+      "lockedUpi": "alexkumar@okaxis",
+      "upiHistory": [
+        "alexkumar@okaxis"
+      ],
+      "referralCode": "ALEX777",
+      "referredBy": null,
+      "isBanned": false,
+      "registrationIp": "192.168.1.10",
+      "createdAt": "2026-08-24T14:15:45.921Z",
+      "lastLoginAt": "2026-09-08T14:15:45.921Z",
+      "lastAdClaimAt": 1788877634960
+    },
+    {
+      "id": "usr_ce9d093be24b",
+      "googleId": "google_1788876976975",
+      "email": "friend.1788876976971@gmail.com",
+      "name": "Referred Friend",
+      "avatar": "https://api.dicebear.com/7.x/bottts/svg?seed=friend.1788876976971%40gmail.com",
+      "coins": 130,
+      "lifetimeEarned": 130,
+      "totalDownloads": 3,
+      "is_admin": false,
+      "twoFactorSecret": null,
+      "twoFactorEnabled": false,
+      "payoutUnlocked": false,
+      "lockedUpi": null,
+      "upiHistory": [],
+      "referralCode": "REFE7741",
+      "referredBy": "usr_demo_user1",
+      "isBanned": false,
+      "registrationIp": "::1",
+      "createdAt": "2026-09-08T14:16:16.975Z",
+      "lastLoginAt": "2026-09-08T14:16:16.975Z"
+    },
+    {
+      "id": "usr_5bdde2269c18",
+      "googleId": "google_1788877323794",
+      "email": "test.user902@gmail.com",
+      "name": "Test User 902",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80",
+      "coins": 100,
+      "lifetimeEarned": 100,
+      "totalDownloads": 0,
+      "is_admin": false,
+      "twoFactorSecret": null,
+      "twoFactorEnabled": false,
+      "payoutUnlocked": false,
+      "lockedUpi": null,
+      "upiHistory": [],
+      "referralCode": "TEST8309",
+      "referredBy": "usr_demo_user1",
+      "isBanned": false,
+      "registrationIp": "::1",
+      "createdAt": "2026-09-08T14:22:03.795Z",
+      "lastLoginAt": "2026-09-08T14:22:03.795Z"
+    },
+    {
+      "id": "usr_c7f7d12d0b93",
+      "googleId": "google_1788877428435",
+      "email": "test.user714@gmail.com",
+      "name": "Test User 714",
+      "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150&auto=format&fit=crop&q=80",
+      "coins": 100,
+      "lifetimeEarned": 100,
+      "totalDownloads": 0,
+      "is_admin": false,
+      "twoFactorSecret": null,
+      "twoFactorEnabled": false,
+      "payoutUnlocked": false,
+      "lockedUpi": null,
+      "upiHistory": [],
+      "referralCode": "TEST4955",
+      "referredBy": "usr_demo_user1",
+      "isBanned": false,
+      "registrationIp": "::1",
+      "createdAt": "2026-09-08T14:23:48.436Z",
+      "lastLoginAt": "2026-09-08T14:23:48.436Z"
+    }
+  ],
+  "downloads": [
+    {
+      "id": "dl_3438573c3a7a",
+      "userId": "usr_demo_user1",
+      "userIp": "::1",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "title": "Top 10 Advanced Coding Paradigms in 2026 Explained",
+      "platform": "youtube",
+      "quality": "720p",
+      "isHighQuality": true,
+      "coinsAwarded": 10,
+      "timestamp": "2026-09-08T14:16:16.953Z"
+    },
+    {
+      "id": "dl_1fcdb367f572",
+      "userId": "usr_demo_user1",
+      "userIp": "::1",
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "title": "Top 10 Advanced Coding Paradigms in 2026 Explained",
+      "platform": "youtube",
+      "quality": "480p",
+      "isHighQuality": false,
+      "coinsAwarded": 0,
+      "timestamp": "2026-09-08T14:16:16.965Z"
+    },
+    {
+      "id": "dl_fc30a4f19e1a",
+      "userId": "usr_ce9d093be24b",
+      "userIp": "::1",
+      "url": "https://youtube.com",
+      "title": "Friend HQ Video 1",
+      "platform": "youtube",
+      "quality": "720p",
+      "isHighQuality": true,
+      "coinsAwarded": 10,
+      "timestamp": "2026-09-08T14:16:16.990Z"
+    },
+    {
+      "id": "dl_ae2a2a48a54d",
+      "userId": "usr_ce9d093be24b",
+      "userIp": "::1",
+      "url": "https://youtube.com",
+      "title": "Friend HQ Video 2",
+      "platform": "youtube",
+      "quality": "720p",
+      "isHighQuality": true,
+      "coinsAwarded": 10,
+      "timestamp": "2026-09-08T14:16:17.003Z"
+    },
+    {
+      "id": "dl_887708d4663c",
+      "userId": "usr_ce9d093be24b",
+      "userIp": "::1",
+      "url": "https://youtube.com",
+      "title": "Friend HQ Video 3",
+      "platform": "youtube",
+      "quality": "720p",
+      "isHighQuality": true,
+      "coinsAwarded": 10,
+      "timestamp": "2026-09-08T14:16:17.014Z"
+    }
+  ],
+  "referrals": [
+    {
+      "id": "ref_cfa8ac2f8bb6",
+      "referrerId": "usr_demo_user1",
+      "referredUserId": "usr_ce9d093be24b",
+      "highQualityDownloadsCount": 3,
+      "status": "completed",
+      "bonusAwarded": 250,
+      "createdAt": "2026-09-08T14:16:16.980Z",
+      "completedAt": "2026-09-08T14:16:17.021Z"
+    },
+    {
+      "id": "ref_a26515a0b1c5",
+      "referrerId": "usr_demo_user1",
+      "referredUserId": "usr_5bdde2269c18",
+      "highQualityDownloadsCount": 0,
+      "status": "pending",
+      "bonusAwarded": 0,
+      "createdAt": "2026-09-08T14:22:03.809Z",
+      "completedAt": null
+    },
+    {
+      "id": "ref_5d2481e17df0",
+      "referrerId": "usr_demo_user1",
+      "referredUserId": "usr_c7f7d12d0b93",
+      "highQualityDownloadsCount": 0,
+      "status": "pending",
+      "bonusAwarded": 0,
+      "createdAt": "2026-09-08T14:23:48.439Z",
+      "completedAt": null
+    }
+  ],
+  "payouts": [
+    {
+      "id": "pay_sample_01",
+      "userId": "usr_demo_user1",
+      "userName": "Alex Kumar",
+      "userEmail": "alex.kumar@gmail.com",
+      "userJoinDate": "2026-08-24T14:15:45.921Z",
+      "tierCoins": 12000,
+      "amountInr": 100,
+      "upiId": "alexkumar@okaxis",
+      "status": "approved",
+      "rejectionReason": null,
+      "fraudFlags": [],
+      "requestedAt": "2026-09-08T12:15:45.921Z",
+      "processedAt": "2026-09-08T14:16:17.196Z",
+      "processedBy": "admin@pulsegrab.com"
+    },
+    {
+      "id": "pay_d5b18c15a1d5",
+      "userId": "usr_demo_user1",
+      "userName": "Alex Kumar",
+      "userEmail": "alex.kumar@gmail.com",
+      "userJoinDate": "2026-08-24T14:15:45.921Z",
+      "tierCoins": 12000,
+      "amountInr": 100,
+      "upiId": "alexkumar@okaxis",
+      "status": "pending",
+      "rejectionReason": null,
+      "fraudFlags": [],
+      "requestedAt": "2026-09-08T14:16:17.037Z",
+      "processedAt": null,
+      "processedBy": null
+    },
+    {
+      "id": "pay_a053ba9f5233",
+      "userId": "usr_admin_default",
+      "userName": "PulseGrab Admin",
+      "userEmail": "admin@pulsegrab.com",
+      "userJoinDate": "2026-08-09T14:15:45.914Z",
+      "tierCoins": 20000,
+      "amountInr": 250,
+      "upiId": "admin@okhdfcbank",
+      "status": "pending",
+      "rejectionReason": null,
+      "fraudFlags": [],
+      "requestedAt": "2026-09-08T14:23:57.867Z",
+      "processedAt": null,
+      "processedBy": null
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "log_1d39fe6810d7",
+      "adminId": "usr_admin_default",
+      "adminEmail": "admin@pulsegrab.com",
+      "action": "PAYOUT_APPROVED",
+      "targetUserId": "usr_demo_user1",
+      "details": "Approved payout pay_sample_01 for ₹100 to UPI: alexkumar@okaxis",
+      "ipAddress": "::1",
+      "timestamp": "2026-09-08T14:16:17.198Z"
+    },
+    {
+      "id": "log_028dd89b6fd2",
+      "adminId": "usr_admin_default",
+      "adminEmail": "admin@pulsegrab.com",
+      "action": "ADMIN_2FA_VERIFIED",
+      "targetUserId": null,
+      "details": "Admin verified 2FA via Google Authenticator session",
+      "ipAddress": "::1",
+      "timestamp": "2026-09-08T14:16:17.182Z"
+    },
+    {
+      "id": "log_init_01",
+      "adminId": "usr_admin_default",
+      "adminEmail": "admin@pulsegrab.com",
+      "action": "SYSTEM_INITIALIZED",
+      "targetUserId": null,
+      "details": "Reward & Downloader Ecosystem Database Initialized",
+      "ipAddress": "127.0.0.1",
+      "timestamp": "2026-09-08T14:15:45.921Z"
+    }
+  ],
+  "dailyLedger": {
+    "usr_demo_user1": {
+      "2026-09-08": {
+        "cycleKey": "2026-09-08",
+        "downloadsCount": 2,
+        "coinsEarned": 10,
+        "referralCoinsEarned": 250
+      }
+    },
+    "usr_ce9d093be24b": {
+      "2026-09-08": {
+        "cycleKey": "2026-09-08",
+        "downloadsCount": 3,
+        "coinsEarned": 30,
+        "referralCoinsEarned": 0
+      }
+    },
+    "usr_admin_default": {
+      "2026-09-08": {
+        "cycleKey": "2026-09-08",
+        "downloadsCount": 0,
+        "coinsEarned": 0,
+        "referralCoinsEarned": 0
+      }
+    },
+    "usr_5bdde2269c18": {
+      "2026-09-08": {
+        "cycleKey": "2026-09-08",
+        "downloadsCount": 0,
+        "coinsEarned": 0,
+        "referralCoinsEarned": 0
+      }
+    },
+    "usr_c7f7d12d0b93": {
+      "2026-09-08": {
+        "cycleKey": "2026-09-08",
+        "downloadsCount": 0,
+        "coinsEarned": 0,
+        "referralCoinsEarned": 0
+      }
+    }
+  }
+}
