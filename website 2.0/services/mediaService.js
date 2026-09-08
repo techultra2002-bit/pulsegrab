@@ -584,7 +584,19 @@ async function streamInstagram(res, payload, filename, contentType) {
     }
   }
 
-  // Fallback: re-fetch via yt-dlp if directUrl is missing
+  // Fallback 1: Try instagram-url-direct if directUrl is missing
+  if (!payload.directUrl && payload.originalUrl) {
+    try {
+      const { instagramGetUrl } = require('instagram-url-direct');
+      const igResult = await instagramGetUrl(payload.originalUrl);
+      if (igResult && igResult.url_list && igResult.url_list.length > 0) {
+        payload.directUrl = igResult.url_list[0];
+        return streamInstagram(res, payload, filename, contentType);
+      }
+    } catch (e) {}
+  }
+
+  // Fallback 2: re-fetch via yt-dlp if directUrl is still missing
   const { originalUrl, formatId } = payload;
   if (!originalUrl) {
     if (!res.headersSent) res.status(400).send('Missing source URL. Please resolve the media again.');
