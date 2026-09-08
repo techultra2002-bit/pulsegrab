@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PulseGrab 2.0 - High-Speed Video Downloader & Coin Reward Ecosystem</title>
   <meta name="description" content="Download YouTube Videos, Shorts, Instagram Reels & Posts in 1080p HD or MP3 Audio. Earn coins on every download, redeem for real cash via UPI, and refer friends for bonuses.">
+  <meta name="theme-color" content="#07090e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PulseGrab">
+  <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -109,6 +114,9 @@
               placeholder="Paste YouTube or Instagram link here (e.g. https://www.youtube.com/watch?v=... or /reel/...)"
               autocomplete="off"
             />
+            <button type="button" class="btn btn-paste-mini" id="quickPasteBtn" title="Paste link from clipboard">
+              📋 Paste
+            </button>
             <button class="btn btn-action" id="resolveMediaBtn">
               <span class="btn-text">Fetch Media</span>
               <span class="btn-loader" style="display:none;">⏳</span>

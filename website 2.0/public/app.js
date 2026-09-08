@@ -400,15 +400,35 @@ function animateValue(obj, start, end, duration) {
 
 // =========================================================
 // DOWNLOADER STUDIO & MEDIA SCRAPING
-// =========================================================
 function initDownloaderEvents() {
   const resolveBtn = document.getElementById('resolveMediaBtn');
   const urlInput = document.getElementById('mediaUrlInput');
+  const pasteBtn = document.getElementById('quickPasteBtn');
 
   if (resolveBtn && urlInput) {
     resolveBtn.addEventListener('click', () => processMediaUrl(urlInput.value));
     urlInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') processMediaUrl(urlInput.value);
+    });
+  }
+
+  if (pasteBtn && urlInput) {
+    pasteBtn.addEventListener('click', async () => {
+      try {
+        if (navigator.clipboard && navigator.clipboard.readText) {
+          const clipText = await navigator.clipboard.readText();
+          if (clipText && clipText.trim()) {
+            urlInput.value = clipText.trim();
+            showToast('Link pasted! Fetching...', 'success');
+            processMediaUrl(clipText.trim());
+            return;
+          }
+        }
+        urlInput.focus();
+        showToast('Please paste your link into the input box.', 'info');
+      } catch (err) {
+        urlInput.focus();
+      }
     });
   }
 

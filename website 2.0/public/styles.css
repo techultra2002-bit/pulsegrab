@@ -476,6 +476,29 @@ body {
   color: var(--text-muted);
 }
 
+.btn-paste-mini {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 0.65rem 0.95rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition-fast);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-paste-mini:hover,
+.btn-paste-mini:active {
+  background: rgba(0, 242, 254, 0.15);
+  color: var(--accent-cyan);
+  border-color: rgba(0, 242, 254, 0.4);
+}
+
 .btn-action {
   background: linear-gradient(135deg, var(--accent-cyan), #3b82f6);
   color: #040814;
