@@ -3,10 +3,15 @@ services:
     name: pulsegrab-ecosystem
     env: node
     plan: free
-    buildCommand: npm run build
+    rootDir: website 2.0
+    buildCommand: npm install
     startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: JWT_SECRET
         generateValue: true
+      - key: YOUTUBE_DL_SKIP_PYTHON_CHECK
+        value: "1"
+      - key: PORT
+        value: "3000"
