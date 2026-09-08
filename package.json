@@ -4,9 +4,8 @@
   "description": "High-Speed Video Downloader & Coin Reward Ecosystem 2.0",
   "main": "website 2.0/server.js",
   "scripts": {
-    "install-app": "npm --prefix \"website 2.0\" install",
     "start": "node \"website 2.0/server.js\"",
-    "build": "npm --prefix \"website 2.0\" install"
+    "build": "YOUTUBE_DL_SKIP_PYTHON_CHECK=1 npm --prefix \"website 2.0\" install"
   },
   "engines": {
     "node": ">=18.0.0"
