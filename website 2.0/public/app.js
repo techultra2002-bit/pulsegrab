@@ -520,7 +520,7 @@ async function triggerStreamDownload(stream, media) {
 
   // 3. Claim Coin Reward from Ledger
   try {
-    const claimRes = await apiRequest('/api/media/reward', 'POST', {
+    const claimRes = await apiRequest('/api/media/claim-reward', 'POST', {
       downloadToken: stream.downloadToken,
       url: media.originalUrl,
       title: media.title,

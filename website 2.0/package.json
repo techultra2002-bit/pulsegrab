@@ -8,13 +8,17 @@
     "dev": "node server.js"
   },
   "dependencies": {
+    "@distube/ytdl-core": "^4.16.12",
+    "@ybd-project/ytdl-core": "^6.0.8",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-rate-limit": "^7.2.0",
     "helmet": "^7.1.0",
+    "instagram-url-direct": "^2.0.7",
     "jsonwebtoken": "^9.0.2",
-    "qrcode": "^1.5.3"
+    "qrcode": "^1.5.3",
+    "youtube-dl-exec": "^3.1.15"
   },
   "keywords": [
     "video-downloader",
@@ -25,5 +29,8 @@
     "upi-redemption"
   ],
   "author": "PulseGrab Team",
-  "license": "MIT"
+  "license": "MIT",
+  "allowScripts": {
+    "youtube-dl-exec@3.1.15": true
+  }
 }
