@@ -1225,7 +1225,7 @@
 
     elements.downloadProgressBox.classList.add('hidden');
     elements.downloadCompleteBox.classList.remove('hidden');
-    elements.completedFileName.textContent = fileName;
+    elements.completedFileName.textContent = fileName + ' (opening download page...)';
 
     if (coinsAwarded > 0) {
       elements.rewardNoticeMessage.innerHTML = `<strong>+10 Coins Credited to Your Wallet!</strong> (Today: ${STATE.dailyVideosRewarded}/${STATE.maxDailyVideos})`;
@@ -1251,26 +1251,59 @@
 
   function triggerFileDownload(fileName, isVideo) {
     const isYt = STATE.currentMedia?.platform === 'youtube';
+    const isIg = STATE.currentMedia?.platform === 'instagram';
     const cleanUrl = STATE.currentMedia?.cleanUrl || elements.urlInput.value;
     const mediaId = STATE.currentMedia?.id;
+    const quality = STATE.selectedQuality;
 
-    let realDownloadUrl = '';
+    // Map quality to cobalt.tools format
+    const cobaltQualityMap = { '1080p': '1080', '720p': '720', '480p': '480', '360p': '360' };
+    const cobaltQuality = cobaltQualityMap[quality] || '1080';
+
+    // Build download URLs for different services
+    let primaryUrl = '';
+    let altUrl1 = '';
+    let altUrl2 = '';
+
     if (isYt && mediaId) {
-      realDownloadUrl = `https://www.ssyoutube.com/watch?v=${mediaId}`;
+      // Primary: cobalt.tools - clean, no ads, supports quality
+      primaryUrl = `https://cobalt.tools/#${encodeURIComponent(cleanUrl)}`;
+      // Alt 1: yt5s.io - supports quality selection
+      altUrl1 = `https://yt5s.io/en68/?q=${encodeURIComponent(cleanUrl)}`;
+      // Alt 2: ssyoutube as final fallback
+      altUrl2 = `https://www.ssyoutube.com/watch?v=${mediaId}`;
+    } else if (isIg && cleanUrl) {
+      // Instagram: use snapinsta and fastdl
+      primaryUrl = `https://snapinsta.app/?url=${encodeURIComponent(cleanUrl)}`;
+      altUrl1 = `https://fastdl.app/en?url=${encodeURIComponent(cleanUrl)}`;
+      altUrl2 = `https://igram.world/?url=${encodeURIComponent(cleanUrl)}`;
     } else if (cleanUrl) {
-      realDownloadUrl = `https://fastdl.app/en?url=${encodeURIComponent(cleanUrl)}`;
+      primaryUrl = `https://cobalt.tools/#${encodeURIComponent(cleanUrl)}`;
+      altUrl1 = `https://fastdl.app/en?url=${encodeURIComponent(cleanUrl)}`;
+      altUrl2 = altUrl1;
     }
 
-    if (realDownloadUrl) {
-      window.open(realDownloadUrl, '_blank');
+    // Open primary download service in new tab
+    if (primaryUrl) {
+      window.open(primaryUrl, '_blank', 'noopener');
     }
 
+    // Update the Download Complete box with real download buttons
     const directLinkBox = document.getElementById('directDownloadFallback');
-    if (directLinkBox && realDownloadUrl) {
+    if (directLinkBox) {
+      const formatLabel = isVideo ? `${quality} MP4 Video` : 'MP3 Audio';
       directLinkBox.innerHTML = `
-        <a href="${realDownloadUrl}" target="_blank" rel="noopener" class="btn-start-download" style="margin-top:12px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;">
-          <i class="fa-solid fa-cloud-arrow-down"></i> Save ${STATE.selectedQuality} File Directly
-        </a>
+        <div style="margin-top:14px;width:100%;">
+          <p style="margin:0 0 10px;font-size:0.82rem;color:#94a3b8;text-align:center;"><i class="fa-solid fa-info-circle"></i> Your download should have opened automatically. If not, use these direct links:</p>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <a href="${primaryUrl}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;background:linear-gradient(135deg,#00f2fe,#4facfe);color:#0a0e1a;border-radius:10px;text-decoration:none;font-weight:700;font-size:0.9rem;">
+              <i class="fa-solid fa-cloud-arrow-down"></i> Download ${formatLabel} Now
+            </a>
+            ${altUrl1 && altUrl1 !== primaryUrl ? `<a href="${altUrl1}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;background:rgba(255,255,255,0.07);color:#cbd5e1;border:1px solid rgba(255,255,255,0.12);border-radius:10px;text-decoration:none;font-weight:600;font-size:0.82rem;">
+              <i class="fa-solid fa-link"></i> Alternative Download Link
+            </a>` : ''}
+          </div>
+        </div>
       `;
     }
   }
